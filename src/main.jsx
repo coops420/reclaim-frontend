@@ -9,6 +9,7 @@ import Referrals from "./pages/Referrals";
 import About from "./pages/About";
 import Vendors from "./pages/Vendors"; // ✅ Import Vendors Page
 import ProductList from "./pages/ProductList"; // ✅ New Product List Page
+import Giveaways from "./pages/Giveaways"; // ✅ New Giveaways Page
 
 const endpoint = clusterApiUrl("mainnet-beta");
 
@@ -24,6 +25,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               <Route path="/about" element={<About />} />
               <Route path="/vendors" element={<Vendors />} /> {/* ✅ Ensure Vendors is routed */}
               <Route path="/vendors/:vendorId" element={<ProductList />} /> {/* ✅ New Product List Page */}
+              <Route path="/giveaways" element={<Giveaways />} /> {/* ✅ New Giveaways Page */}
             </Routes>
           </Router>
         </WalletModalProvider>

@@ -27,6 +27,7 @@ export default function App() {
         <Link to="/referrals" className="nav-button">Get $Claim Now (Desktop)</Link>
         <Link to="/vendors" className="nav-button">Vendors</Link> {/* ✅ Corrected to lowercase "/vendors" */}
         <Link to="/about" className="nav-button">About Us</Link>
+ <Link to="/giveaways" className="nav-button">🎁 Giveaways</Link> {/* ✅ NEW BUTTON */}
       </nav>
 
       {/* Contract Address Section (Lowered) */}
