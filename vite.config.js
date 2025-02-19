@@ -1,7 +1,18 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import nodePolyfills from "rollup-plugin-polyfill-node"; // Correct polyfill plugin
 
-// https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
-})
+  plugins: [
+    react(),
+    nodePolyfills({ include: ["buffer"] }), // Ensures Buffer works
+  ],
+  resolve: {
+    alias: {
+      buffer: "buffer/",
+    },
+  },
+  define: {
+    "process.env": {}, // Fixes missing process.env
+  },
+});
