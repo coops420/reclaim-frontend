@@ -2,7 +2,8 @@ import React from "react";
 import { Link, useParams } from "react-router-dom";
 import "./ProductList.css";
 import vendorImage from "../assets/gorillapackgenetics.webp"; // ✅ Ensure this file exists
-import kushpack from "../assets/kushpack.webp"; // ✅ Example product image
+import kushpack from "/src/assets/kushpack.webp";
+
 
 const ProductList = () => {
   const { vendorId } = useParams();
