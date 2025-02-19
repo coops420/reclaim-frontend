@@ -25,7 +25,7 @@ export default function App() {
       {/* Navigation */}
       <nav className="nav-links">
         <Link to="/referrals" className="nav-button">Get $Claim Now (Desktop)</Link>
-        <Link to="/Vendors" className="nav-button">Vendors</Link>
+        <Link to="/vendors" className="nav-button">Vendors</Link> {/* ✅ Corrected to lowercase "/vendors" */}
         <Link to="/about" className="nav-button">About Us</Link>
       </nav>
 

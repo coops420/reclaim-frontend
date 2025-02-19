@@ -6,16 +6,9 @@ import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
 import { clusterApiUrl } from "@solana/web3.js";
 import App from "./App";
 import Referrals from "./pages/Referrals";
-import About from "./pages/About"; // ✅ Import About Us Page
-import "./App.css";
-
-// Fix Buffer Issues
-import { Buffer } from "buffer";
-if (!window.Buffer) {
-  window.Buffer = Buffer;
-}
-
-console.log("✅ Main.jsx is rendering...");
+import About from "./pages/About";
+import Vendors from "./pages/Vendors"; // ✅ Import Vendors Page
+import ProductList from "./pages/ProductList"; // ✅ New Product List Page
 
 const endpoint = clusterApiUrl("mainnet-beta");
 
@@ -28,8 +21,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <Routes>
               <Route path="/" element={<App />} />
               <Route path="/referrals" element={<Referrals />} />
-              <Route path="/referrals/:referrer" element={<Referrals />} /> {/* ✅ Keeps referral logic */}
-              <Route path="/about" element={<About />} /> {/* ✅ About Us page now properly linked */}
+              <Route path="/about" element={<About />} />
+              <Route path="/vendors" element={<Vendors />} /> {/* ✅ Ensure Vendors is routed */}
+              <Route path="/vendors/:vendorId" element={<ProductList />} /> {/* ✅ New Product List Page */}
             </Routes>
           </Router>
         </WalletModalProvider>
@@ -37,4 +31,3 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     </ConnectionProvider>
   </React.StrictMode>
 );
-
