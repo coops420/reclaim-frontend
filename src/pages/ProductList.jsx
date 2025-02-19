@@ -13,8 +13,10 @@ const ProductList = () => {
       {/* 🔹 Navigation Buttons (At the Top) */}
       <nav className="nav-links">
         <Link to="/" className="nav-button">Home</Link>
+        <Link to="/referrals" className="nav-button">Buy $Claim Now (desktop)</Link>
         <Link to="/vendors" className="nav-button">Vendors</Link>
         <Link to="/about" className="nav-button">About Us</Link>
+        <Link to="/giveaways" className="nav-button">AirDrops & Giveaways</Link> {/* ✅ NEW BUTTON */}
       </nav>
 
       {/* 🔹 Vendor Image at the Top */}

@@ -19,20 +19,23 @@ export default function App() {
 
       {/* Hero Section */}
       <div className="hero">
-        <h1 className="title">Welcome to <span className="glow">$CLAIM</span></h1>
+        <h1 className="title" style={{ marginBottom: "-10px" }}>
+  Welcome to <span className="glow">$CLAIM</span>
+</h1>
       </div>
 
       {/* Navigation */}
       <nav className="nav-links">
-        <Link to="/referrals" className="nav-button">Get $Claim Now (Desktop)</Link>
-        <Link to="/vendors" className="nav-button">Vendors</Link> {/* ✅ Corrected to lowercase "/vendors" */}
+          <Link to="/" className="nav-button">Home</Link>
+        <Link to="/referrals" className="nav-button">Buy $Claim Now (desktop)</Link>
+        <Link to="/vendors" className="nav-button">Vendors</Link>
+        <Link to="/about" className="nav-button">About Us</Link>
         <Link to="/giveaways" className="nav-button">AirDrops & Giveaways</Link> {/* ✅ NEW BUTTON */}
-       <Link to="/about" className="nav-button">About Us</Link>
 
 </nav>
 
       {/* Contract Address Section (Lowered) */}
-      <div className="contract-container" style={{ marginTop: "30px" }}>
+      <div className="contract-container" style={{ marginTop: "-15px" }}>
         <p className="contract-label">Contract Address:</p>
         <button onClick={handleCopy} className="contract-button">
           {contractAddress} 📋

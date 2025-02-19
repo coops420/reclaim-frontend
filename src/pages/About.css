@@ -1,3 +1,8 @@
+.nav-links {
+  position: relative; /* Ensure it's above the overlay */
+  z-index: 10; /* Higher than the overlay */
+}
+
 /* Background */
 .about-container {
   position: relative;

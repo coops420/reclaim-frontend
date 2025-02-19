@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom"; // ✅ Import for navigation links
 import "./About.css"; // Ensure CSS includes animations
 
 const About = () => {
@@ -13,6 +14,9 @@ const About = () => {
 
   return (
     <div className="about-container">
+      {/* ✅ Navigation at the Top */}
+    
+
       {/* Background Overlay with Flickering Effect */}
       <div className="overlay" />
 
@@ -21,7 +25,8 @@ const About = () => {
         <h1 className="movie-title flicker">Welcome to Reclaim ($CLAIM)</h1>
         <p className="fade-in">
           Reclaim is a <span className="highlight">community-driven cryptocurrency</span> dedicated to supporting the community.
-          <span className="glow"></span>        </p>
+          <span className="glow"></span>        
+        </p>
         <h2 className="slide-in">🌍 Our Mission</h2>
         <p className="fade-in-delayed">
           - Fair and transparent tokenomics<br/>
