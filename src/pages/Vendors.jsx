@@ -9,9 +9,9 @@ const Vendors = () => {
       {/* 🔹 Navigation Buttons */}
       <nav className="nav-links">
         <Link to="/" className="nav-button">Home</Link>
-        <Link to="/about" className="nav-button">About</Link>
-        <Link to="/referrals" className="nav-button">Referrals</Link>
-      </nav>
+        <Link to="/referrals" className="nav-button">Buy $Claim Now (Desktop)</Link>
+      <Link to="/about" className="nav-button">About</Link>
+</nav>
 
       <h1 className="page-title">VENDORS</h1>
 
