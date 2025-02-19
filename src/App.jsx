@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import TokenPrice from "./components/TokenPrice"; // 🟢 Import Token Price Component
+import TokenPrice from "./components/TokenPrice"; // ✅ Import Token Price Component
 import "./App.css";
 
 export default function App() {
   return (
     <div className="homepage">
-      <TokenPrice /> {/* 🟢 Display Token Price at the top */}
+      <TokenPrice /> {/* ✅ Display token price */}
 
       {/* Hero Section */}
       <div className="hero">
@@ -22,4 +22,6 @@ export default function App() {
     </div>
   );
 }
+
+
 

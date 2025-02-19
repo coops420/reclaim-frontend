@@ -1,67 +1,60 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
-export default function TokenPrice() {
-  const [tokenPrice, setTokenPrice] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const dexScreenerUrl = "https://dexscreener.com/solana/4vAxFw4b4cGEV7CzEcbWFJ38N3FTa1BxRM828xEzcxQR";
+const TOKEN_PAIR = "4vAxFw4b4cGEV7CzEcbWFJ38N3FTa1BxRM828xEzcxQR";
+const DEXSCREENER_API_URL = `https://api.dexscreener.com/latest/dex/pairs/solana/${TOKEN_PAIR}`;
+const DEX_LINK = `https://dexscreener.com/solana/${TOKEN_PAIR}`;
 
-  useEffect(() => {
-    const fetchPrice = async () => {
-      try {
-        const response = await axios.get(
-          "https://api.coingecko.com/api/v3/simple/price?ids=claim-token&vs_currencies=usd"
-        );
+const TokenPrice = () => {
+    const [price, setPrice] = useState(null);
+    const [loading, setLoading] = useState(true);
 
-        if (response.data["claim-token"]?.usd) {
-          setTokenPrice(response.data["claim-token"].usd);
-        } else {
-          console.warn("⚠️ Token price not found. Using DEX link.");
-        }
-      } catch (error) {
-        console.error("❌ Error fetching token price:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+    useEffect(() => {
+        const fetchPrice = async () => {
+            try {
+                console.log("🔄 Fetching $CLAIM price from Dexscreener...");
+                
+                const response = await axios.get(DEXSCREENER_API_URL);
+                console.log("🔎 Dexscreener API Response:", response.data);
+                
+                if (response.data && response.data.pairs && response.data.pairs.length > 0) {
+                    const pairData = response.data.pairs.find(pair => pair.pairAddress === TOKEN_PAIR);
+                    if (pairData && pairData.priceUsd) {
+                        setPrice(pairData.priceUsd);
+                    } else {
+                        console.warn("⚠️ Token price not found in Dexscreener response.");
+                    }
+                } else {
+                    console.warn("⚠️ No valid pairs found in Dexscreener response.");
+                }
+            } catch (error) {
+                console.error("❌ Error fetching token price:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-    fetchPrice();
-    const interval = setInterval(fetchPrice, 60000); // Update price every 60 seconds
-    return () => clearInterval(interval);
-  }, []);
+        fetchPrice();
+        const interval = setInterval(fetchPrice, 30000); // Refresh every 30 sec
+        return () => clearInterval(interval);
+    }, []);
 
-  return (
-    <div style={styles.priceContainer}>
-      <span style={styles.priceText}>
-        {loading ? "Loading..." : tokenPrice ? `$${tokenPrice.toFixed(4)}` : "Price Unavailable"}
-      </span>
-      <a href={dexScreenerUrl} target="_blank" rel="noopener noreferrer" style={styles.dexLink}>
-        View on DexScreener
-      </a>
-    </div>
-  );
-}
-
-const styles = {
-  priceContainer: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    gap: "15px",
-    padding: "10px",
-    backgroundColor: "rgba(255, 255, 255, 0.1)",
-    borderRadius: "8px",
-    boxShadow: "0px 0px 10px rgba(0, 212, 255, 0.4)",
-    fontSize: "1.2rem",
-    fontWeight: "bold",
-    color: "#00d4ff",
-  },
-  priceText: {
-    fontFamily: "'Orbitron', sans-serif",
-  },
-  dexLink: {
-    textDecoration: "none",
-    color: "#00d4ff",
-    fontWeight: "bold",
-  },
+    return (
+        <div className="token-price-container" style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <span className="token-price" style={{ fontSize: "18px", fontWeight: "bold" }}>
+                {loading ? "Loading..." : `$${price ? parseFloat(price).toFixed(6) : "N/A"} CLAIM`}
+            </span>
+            <a 
+                href={DEX_LINK} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="dex-link" 
+                style={{ textDecoration: "none", backgroundColor: "#007BFF", color: "white", padding: "5px 10px", borderRadius: "5px", fontWeight: "bold" }}
+            >
+                View on Dexscreener
+            </a>
+        </div>
+    );
 };
+
+export default TokenPrice;

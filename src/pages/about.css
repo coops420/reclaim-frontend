@@ -1,0 +1,137 @@
+/* Background */
+.about-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle, #000000 20%, #121212 80%);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Cinematic overlay */
+.overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  animation: flicker 2s infinite alternate;
+}
+
+/* Scrolling Text */
+.scrolling-text {
+  position: absolute;
+  width: 60%;
+  color: #ffffff;
+  font-size: 22px;
+  font-family: "Poppins", sans-serif;
+  text-align: center;
+  line-height: 1.8;
+  white-space: nowrap;
+  overflow: hidden;
+  animation: scrollUp 40s linear infinite;
+}
+
+/* Title Animation */
+.movie-title {
+  font-size: 36px;
+  font-weight: bold;
+  color: #ffcc00;
+  text-transform: uppercase;
+  text-shadow: 0px 0px 10px rgba(255, 204, 0, 0.8);
+}
+
+/* Animations */
+@keyframes scrollUp {
+  from {
+    transform: translateY(100vh);
+  }
+  to {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes flicker {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Text Effects */
+.fade-in {
+  animation: fadeIn 3s ease-in-out;
+}
+
+.fade-in-delayed {
+  animation: fadeIn 3s ease-in-out 2s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.slide-in {
+  transform: translateX(-50px);
+  animation: slideIn 1.5s ease-in-out forwards;
+}
+
+@keyframes slideIn {
+  to {
+    transform: translateX(0);
+  }
+}
+
+.zoom-in {
+  transform: scale(0.8);
+  animation: zoomIn 2s ease-in-out forwards;
+}
+
+@keyframes zoomIn {
+  to {
+    transform: scale(1);
+  }
+}
+
+/* Text Glow */
+.glow {
+  color: #ff4444;
+  text-shadow: 0px 0px 15px rgba(255, 68, 68, 0.9);
+}
+
+.flicker {
+  animation: flicker 1.5s infinite alternate;
+}
+
+/* Links */
+.link-hover {
+  color: #00ffcc;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+}
+
+.link-hover:hover {
+  color: #ff44ff;
+  text-shadow: 0px 0px 10px rgba(255, 68, 255, 0.8);
+}
+
+/* Contract Address */
+.contract {
+  font-size: 18px;
+  color: #ffcc00;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 5px;
+  border-radius: 5px;
+}

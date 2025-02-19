@@ -6,6 +6,7 @@ import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
 import { clusterApiUrl } from "@solana/web3.js";
 import App from "./App";
 import Referrals from "./pages/Referrals";
+import About from "./pages/About"; // ✅ Import About Us Page
 import "./App.css";
 
 // Fix Buffer Issues
@@ -27,7 +28,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <Routes>
               <Route path="/" element={<App />} />
               <Route path="/referrals" element={<Referrals />} />
-              <Route path="/referrals/:referrer" element={<Referrals />} /> {/* ✅ Added dynamic referral route */}
+              <Route path="/referrals/:referrer" element={<Referrals />} /> {/* ✅ Keeps referral logic */}
+              <Route path="/about" element={<About />} /> {/* ✅ About Us page now properly linked */}
             </Routes>
           </Router>
         </WalletModalProvider>
