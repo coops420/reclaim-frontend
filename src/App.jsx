@@ -26,9 +26,10 @@ export default function App() {
       <nav className="nav-links">
         <Link to="/referrals" className="nav-button">Get $Claim Now (Desktop)</Link>
         <Link to="/vendors" className="nav-button">Vendors</Link> {/* ✅ Corrected to lowercase "/vendors" */}
-        <Link to="/about" className="nav-button">About Us</Link>
- <Link to="/giveaways" className="nav-button">🎁 Giveaways</Link> {/* ✅ NEW BUTTON */}
-      </nav>
+        <Link to="/giveaways" className="nav-button">AirDrops & Giveaways</Link> {/* ✅ NEW BUTTON */}
+       <Link to="/about" className="nav-button">About Us</Link>
+
+</nav>
 
       {/* Contract Address Section (Lowered) */}
       <div className="contract-container" style={{ marginTop: "30px" }}>
