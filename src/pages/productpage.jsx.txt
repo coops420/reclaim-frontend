@@ -1,0 +1,27 @@
+import React from "react";
+import { useParams, Link } from "react-router-dom";
+import "./ProductPage.css";
+import kushpack from "../assets/kushpack.png"; // ✅ Product image
+
+const ProductPage = () => {
+  const { productId } = useParams();
+
+  return (
+    <div className="product-page">
+      <Link to="/vendors/gorillapack" className="back-button">← Back to Products</Link>
+
+      <div className="product-container">
+        <img src={kushpack} alt="Exotic Kush Pack" className="product-image" />
+        <div className="product-details">
+          <h1 className="product-title">Exotic Kush Pack</h1>
+          <p className="product-description">
+            A premium selection of exotic Kush genetics, perfect for connoisseurs.
+          </p>
+          <p className="product-price">Price: <span>150 CLAIM</span></p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ProductPage;

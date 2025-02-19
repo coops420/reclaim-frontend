@@ -21,8 +21,7 @@ const About = () => {
         <h1 className="movie-title flicker">Welcome to Reclaim ($CLAIM)</h1>
         <p className="fade-in">
           Reclaim is a <span className="highlight">community-driven cryptocurrency</span> dedicated to supporting the community.
-          Our mission is to <span className="glow">restore trust and empower users</span> with transparency and fairness in the crypto space.
-        </p>
+          <span className="glow"></span>        </p>
         <h2 className="slide-in">🌍 Our Mission</h2>
         <p className="fade-in-delayed">
           - Fair and transparent tokenomics<br/>
