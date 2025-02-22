@@ -1,6 +1,11 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
 import TokenPrice from "./components/TokenPrice";
+import StrawberryFritter from "./pages/StrawberryFritter"; // ✅ Import Product Page
+import Vendors from "./pages/Vendors";
+import About from "./pages/About";
+import Giveaways from "./pages/Giveaways";
+import Referrals from "./pages/Referrals";
 import "./App.css";
 
 export default function App() {
@@ -10,7 +15,7 @@ export default function App() {
   const handleCopy = () => {
     navigator.clipboard.writeText(contractAddress);
     setCopied(true);
-    setTimeout(() => setCopied(false), 2000); // Reset after 2 sec
+    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
@@ -20,21 +25,29 @@ export default function App() {
       {/* Hero Section */}
       <div className="hero">
         <h1 className="title" style={{ marginBottom: "-10px" }}>
-  Welcome to <span className="glow">$CLAIM</span>
-</h1>
+          Welcome to <span className="glow">$CLAIM</span>
+        </h1>
       </div>
 
       {/* Navigation */}
       <nav className="nav-links">
-          <Link to="/" className="nav-button">Home</Link>
+        <Link to="/" className="nav-button">Home</Link>
         <Link to="/referrals" className="nav-button">Buy $Claim Now (desktop)</Link>
         <Link to="/vendors" className="nav-button">Vendors</Link>
         <Link to="/about" className="nav-button">About Us</Link>
-        <Link to="/giveaways" className="nav-button">AirDrops & Giveaways</Link> {/* ✅ NEW BUTTON */}
+        <Link to="/giveaways" className="nav-button">AirDrops & Giveaways</Link>
+      </nav>
 
-</nav>
+      {/* Routing Setup */}
+      <Routes>
+        <Route path="/vendors" element={<Vendors />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/giveaways" element={<Giveaways />} />
+        <Route path="/referrals" element={<Referrals />} />
+        <Route path="/strawberry-fritter" element={<StrawberryFritter />} /> {/* ✅ New Product Page */}
+      </Routes>
 
-      {/* Contract Address Section (Lowered) */}
+      {/* Contract Address Section */}
       <div className="contract-container" style={{ marginTop: "-15px" }}>
         <p className="contract-label">Contract Address:</p>
         <button onClick={handleCopy} className="contract-button">
@@ -43,7 +56,7 @@ export default function App() {
         {copied && <p className="copy-confirm">Copied!</p>}
       </div>
 
-      {/* Telegram Button - Added Neatly at the Bottom */}
+      {/* Telegram Button */}
       <div className="telegram-container">
         <a href="https://t.me/reclaimtoken" target="_blank" rel="noopener noreferrer" className="telegram-button">
           Join Our Telegram 🚀
@@ -52,5 +65,3 @@ export default function App() {
     </div>
   );
 }
-
-

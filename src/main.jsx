@@ -8,8 +8,9 @@ import App from "./App";
 import Referrals from "./pages/Referrals";
 import About from "./pages/About";
 import Vendors from "./pages/Vendors"; // ✅ Import Vendors Page
-import ProductList from "./pages/ProductList"; // ✅ New Product List Page
-import Giveaways from "./pages/Giveaways"; // ✅ New Giveaways Page
+import ProductList from "./pages/ProductList"; // ✅ Product List Page
+import Giveaways from "./pages/Giveaways"; // ✅ Giveaways Page
+import StrawberryFritter from "./pages/StrawberryFritter"; // ✅ New Product Page
 
 const endpoint = clusterApiUrl("mainnet-beta");
 
@@ -23,9 +24,10 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               <Route path="/" element={<App />} />
               <Route path="/referrals" element={<Referrals />} />
               <Route path="/about" element={<About />} />
-              <Route path="/vendors" element={<Vendors />} /> {/* ✅ Ensure Vendors is routed */}
-              <Route path="/vendors/:vendorId" element={<ProductList />} /> {/* ✅ New Product List Page */}
-              <Route path="/giveaways" element={<Giveaways />} /> {/* ✅ New Giveaways Page */}
+              <Route path="/vendors" element={<Vendors />} />
+              <Route path="/vendors/:vendorId" element={<ProductList />} />
+              <Route path="/giveaways" element={<Giveaways />} />
+              <Route path="/strawberry-fritter" element={<StrawberryFritter />} /> {/* ✅ New Product Page */}
             </Routes>
           </Router>
         </WalletModalProvider>

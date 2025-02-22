@@ -26,7 +26,7 @@
   background: #555;
 }
 
-/* 🔹 Vendor Image - Centered and Properly Sized */
+/* 🔹 Vendor Image - Fixed Size */
 .vendor-header {
   display: flex;
   justify-content: center;
@@ -35,18 +35,17 @@
 }
 
 .vendor-image {
-  width: 180px; /* ✅ Matches product images */
-  height: 180px;
-  border-radius: 10px;
+  width: 180px !important; /* ✅ Ensures proper sizing */
+  height: 180px !important;
   object-fit: cover;
+  border-radius: 10px;
   display: block;
-  background: none; /* ✅ Ensures no extra grey background */
 }
 
 /* 🔹 Product Grid */
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* ✅ Matches vendor size */
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* ✅ Ensures uniform size */
   gap: 20px;
   justify-content: center;
   padding: 10px;
@@ -56,14 +55,14 @@
 .product-item {
   position: relative;
   overflow: hidden;
-  width: 180px; /* ✅ Same as vendor image */
+  width: 180px;
   height: 180px;
   border-radius: 10px;
 }
 
 .product-image {
-  width: 100%;
-  height: 100%;
+  width: 180px !important;
+  height: 180px !important;
   border-radius: 10px;
   transition: 0.3s ease-in-out;
   object-fit: cover;
@@ -95,3 +94,51 @@
   margin: 5px 0;
   font-size: 14px;
 }
+
+/* 🔹 Product Details Page */
+.product-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.product-details img {
+  width: 180px !important;
+  height: 180px !important;
+  object-fit: cover;
+  border-radius: 10px;
+  display: block;
+}
+
+/* 🔹 Wallet Container */
+.wallet-container {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 🔹 Fix for Phantom Wallet Button Placement */
+.wallet-adapter-button-trigger {
+  position: relative !important; /* ✅ Keeps it from floating below */
+  z-index: 1000;
+}
+
+/* 🔹 Buy Button */
+.buy-button {
+  background: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: 0.3s ease-in-out;
+}
+
+.buy-button:hover {
+  background: #0056b3;
+}
+
