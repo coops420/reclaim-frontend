@@ -7,10 +7,12 @@ import { clusterApiUrl } from "@solana/web3.js";
 import App from "./App";
 import Referrals from "./pages/Referrals";
 import About from "./pages/About";
-import Vendors from "./pages/Vendors"; // ✅ Import Vendors Page
-import ProductList from "./pages/ProductList"; // ✅ Product List Page
-import Giveaways from "./pages/Giveaways"; // ✅ Giveaways Page
-import StrawberryFritter from "./pages/StrawberryFritter"; // ✅ New Product Page
+import Vendors from "./pages/Vendors"; // Import Vendors Page
+import ProductList from "./pages/ProductList"; // Product List Page
+import Giveaways from "./pages/Giveaways"; // Giveaways Page
+import StrawberryFritter from "./pages/StrawberryFritter"; // Strawberry Fritter Page
+import Plumz from "./pages/Plumz"; // Plumz Page
+import HoneyDewPapaya from "./pages/HoneyDewPapaya"; // HoneyDew Papaya Page
 
 const endpoint = clusterApiUrl("mainnet-beta");
 
@@ -27,7 +29,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               <Route path="/vendors" element={<Vendors />} />
               <Route path="/vendors/:vendorId" element={<ProductList />} />
               <Route path="/giveaways" element={<Giveaways />} />
-              <Route path="/strawberry-fritter" element={<StrawberryFritter />} /> {/* ✅ New Product Page */}
+              <Route path="/strawberry-fritter" element={<StrawberryFritter />} />
+              <Route path="/plumz" element={<Plumz />} />
+              <Route path="/honeydew-papaya" element={<HoneyDewPapaya />} />
             </Routes>
           </Router>
         </WalletModalProvider>
