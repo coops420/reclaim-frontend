@@ -300,7 +300,7 @@ const Plumz = () => {
               type="text"
               value={orderDetails.walletSnippet}
               onChange={(e) => setOrderDetails({ ...orderDetails, walletSnippet: e.target.value.trim() })}
-              placeholder="e.g. abcd"
+              placeholder="e.g. 4X...c0"
             />
           </div>
 
