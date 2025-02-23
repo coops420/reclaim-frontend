@@ -2,18 +2,24 @@ import React, { useState, useEffect } from "react";
 import "./CountdownTimer.css"; // ✅ Import Styles
 
 const CountdownTimer = () => {
-  const getNextSundayMidnight = () => {
+  const getNextMondayMidnight = () => {
     let now = new Date();
-    let daysUntilSunday = 7 - now.getDay();
-    let nextSunday = new Date(now);
-    nextSunday.setDate(now.getDate() + daysUntilSunday);
-    nextSunday.setHours(0, 0, 0, 0);
-    return nextSunday;
+    let nextTarget = new Date(now);
+
+    if (now.getDay() === 0) { // If today is Sunday
+      nextTarget.setDate(now.getDate() + 1); // Set to Monday
+      nextTarget.setHours(0, 0, 0, 0); // Midnight Monday
+    } else {
+      let daysUntilMonday = (8 - now.getDay()) % 7;
+      nextTarget.setDate(now.getDate() + daysUntilMonday);
+      nextTarget.setHours(0, 0, 0, 0);
+    }
+    return nextTarget;
   };
 
   const calculateTimeLeft = () => {
     const now = new Date();
-    const difference = getNextSundayMidnight() - now;
+    const difference = getNextMondayMidnight() - now;
 
     if (difference > 0) {
       return {
