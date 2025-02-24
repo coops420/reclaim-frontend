@@ -66,8 +66,8 @@ const ProductList = () => {
           <Link to="/bathsalts">
             <img src={bathsaltsImage} alt="BathSalts" className="product-image" />
             <div className="product-hover">
-              <p className="product-name">BathSalts</p>
-              <p className="product-price">💲50.00</p>
+              <p className="product-name">BathSalts Flower</p>
+              <p className="product-price">💲40/💲200</p>
             </div>
           </Link>
         </div>
