@@ -14,14 +14,14 @@
   margin-top: 40px; /* ⬇ Lowered slightly */
 }
 
-/* 🔹 Vendors Title */
-.vendors-title {
+/* 🔹 Page Title (renamed from .vendors-title to .page-title) */
+.page-title {
   font-size: 2.5rem;
   font-weight: bold;
   color: #ffffff;
   text-shadow: 0px 0px 12px rgba(255, 255, 255, 0.9), 0px 0px 25px rgba(0, 255, 255, 0.8);
   text-transform: uppercase;
-  margin-top: 70px; /* ⬇ Moves title down */
+  margin-top: 70px;   /* ⬇ Moves title down */
   margin-bottom: 20px; /* ⬆ Ensures spacing */
 }
 
@@ -74,5 +74,4 @@
   transform: translateY(100%);
   transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
-
 

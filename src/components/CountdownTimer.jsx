@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import "./CountdownTimer.css"; // ✅ Import Styles
+import "./CountdownTimer.css";
 
 const CountdownTimer = () => {
   const getNextMondayMidnight = () => {
     let now = new Date();
     let nextTarget = new Date(now);
 
-    if (now.getDay() === 0) { // If today is Sunday
-      nextTarget.setDate(now.getDate() + 1); // Set to Monday
-      nextTarget.setHours(0, 0, 0, 0); // Midnight Monday
+    if (now.getDay() === 0) {
+      nextTarget.setDate(now.getDate() + 1);
+      nextTarget.setHours(0, 0, 0, 0);
     } else {
       let daysUntilMonday = (8 - now.getDay()) % 7;
       nextTarget.setDate(now.getDate() + daysUntilMonday);
@@ -43,10 +43,13 @@ const CountdownTimer = () => {
   }, []);
 
   return (
-    <div className="countdown-box">
-      <span className="countdown-time">
+    <div className="countdown-container">
+      <div className="countdown-timer">
         {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m {timeLeft.seconds}s
-      </span>
+      </div>
+      <div className="countdown-subtext">
+        {/* Optional subtext can be added here */}
+      </div>
     </div>
   );
 };

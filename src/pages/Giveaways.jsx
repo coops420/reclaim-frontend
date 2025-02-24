@@ -7,33 +7,33 @@ const Giveaways = () => {
   return (
     <div className="giveaways-container">
       {/* ✅ Navigation */}
-     <nav className="nav-links" style={{ marginTop: "70px" }}>
-
-       <Link to="/" className="nav-button">Home</Link>
+      <nav className="nav-links" style={{ marginTop: "70px" }}>
+        <Link to="/" className="nav-button">Home</Link>
         <Link to="/referrals" className="nav-button">Buy $Claim Now (desktop)</Link>
         <Link to="/vendors" className="nav-button">Vendors</Link>
         <Link to="/about" className="nav-button">About Us</Link>
-        <Link to="/giveaways" className="nav-button">AirDrops & Giveaways</Link> {/* ✅ NEW BUTTON */}
+        <Link to="/giveaways" className="nav-button">AirDrops & Giveaways</Link>
       </nav>
 
       {/* ✅ Giveaway Title */}
       <h1 className="giveaway-prize">
-        🎁 <b>THIS MONTH’S PRIZE</b>: $600 IN CUSTOM HEADY GLASS! 🔥
+         <b>THIS MONTH’S PRIZE</b>: <span className="highlight">$600 IN CUSTOM HEADY GLASS!</span> 
       </h1>
 
-      {/* ✅ Giveaway Info */}
-      <div className="giveaway-content">
-        <div className="giveaway-section">
-          Every <b>2nd</b> of the month, we hold a <b>Giveaway</b> for our loyal holders! 🔥
-        </div>
-
-        <div className="giveaway-section">
-          🔥 <b>Minimum Holding:</b> $10 USD in $CLAIM
-        </div>
-
-        <div className="giveaway-section">
-          Make sure you're holding <b>$CLAIM</b> and message <b>Kyle (Telegram)</b>. You're entered for each month's Giveaway! 🎁
-        </div>
+      {/* ✅ Bullet List for Giveaway Info */}
+      <div className="giveaway-info">
+        <ul className="giveaway-list">
+          <li>
+            Every <b>2nd</b> of the month, we hold a <b>Giveaway</b> for our loyal holders! 🔥
+          </li>
+          <li>
+            <b>Minimum Holding:</b> $10 USD in $CLAIM
+          </li>
+          <li>
+            Make sure you're holding <b>$CLAIM</b> and message <b>Kyle (Telegram)</b>.
+            You're entered for each month's Giveaway! 🎁
+          </li>
+        </ul>
       </div>
 
       {/* ✅ Countdown Timer for Weekly Airdrop & Burn */}
@@ -48,4 +48,3 @@ const Giveaways = () => {
 };
 
 export default Giveaways;
-

@@ -2,7 +2,7 @@
 
 .giveaways-container {
   text-align: center;
-  padding: 20px 20px; /* ✅ Reduced padding from 60px to 20px to move content up */
+  padding: 20px 20px;
   color: #fff;
   background: #111;
   font-family: 'Audiowide', sans-serif;
@@ -11,14 +11,14 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  margin-top: -48px; /* ✅ Moves everything up by ~5 lines */
+  margin-top: -48px;
 }
 
 /* ✅ Navigation */
 .nav-links {
   display: flex;
   gap: 15px;
-  margin-bottom: 30px; /* ✅ Reduced spacing below buttons */
+  margin-bottom: 30px;
 }
 
 .nav-button {
@@ -39,20 +39,39 @@
   font-size: 2.2rem;
   font-weight: bold;
   color: #ffffff;
-  text-shadow: 0px 0px 12px rgba(255, 255, 255, 0.9), 0px 0px 25px rgba(0, 255, 255, 0.8);
+  text-shadow:
+    0px 0px 12px rgba(255, 255, 255, 0.9),
+    0px 0px 25px rgba(0, 255, 255, 0.8);
   text-transform: uppercase;
-  margin-bottom: 15px; /* ✅ Slightly reduced bottom margin */
+  margin-bottom: 15px;
 }
 
-/* ✅ Giveaway Info Sections */
-.giveaway-section {
-  font-size: 1.3rem;
-  background: rgba(255, 255, 255, 0.1);
-  padding: 15px;
-  border-radius: 12px;
-  margin: 8px auto;
-  width: 70%;
-  text-align: center;
+/* ✅ Highlight for Prize Amount */
+.highlight {
+  color: #ffcc00;
+  text-shadow:
+    0px 0px 12px rgba(255, 255, 0, 0.9),
+    0px 0px 25px rgba(255, 255, 0, 0.8);
+}
+
+/* ✅ Bullet List for Giveaway Info */
+.giveaway-info {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin: 20px auto 25px;
+  width: 80%;
+  max-width: 600px;
+  text-align: left;
+}
+
+.giveaway-list {
+  list-style-type: disc;
+  margin-left: 2rem; /* Indent bullets a bit */
+  padding-left: 0;   /* No extra left padding */
+}
+
+.giveaway-list li {
+  margin-bottom: 10px; /* Space between bullet items */
 }
 
 /* ✅ Countdown Box */
@@ -64,8 +83,30 @@
   text-align: center;
   width: 80%;
   max-width: 500px;
-  margin-top: 30px; /* ✅ Moved up slightly */
+  margin-top: 30px;
   box-shadow: 0px 0px 15px rgba(0, 255, 255, 0.8);
 }
 
+.countdown-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #ffcc00;
+  text-shadow:
+    0px 0px 12px rgba(255, 255, 255, 0.9),
+    0px 0px 25px rgba(0, 255, 255, 0.8);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.countdown-info {
+  font-size: 1rem;
+  margin-top: 10px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.countdown-note {
+  font-size: 0.9rem;
+  margin-top: 5px;
+  color: #ccc;
+}
 

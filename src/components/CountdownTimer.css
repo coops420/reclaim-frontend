@@ -1,36 +1,52 @@
 @import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
 
 .countdown-container {
-  text-align: center;
-  font-family: 'Audiowide', sans-serif;
-  color: #fff;
-  background: #111;
+  background: #000;
+  border: 3px solid #00ff99;      /* Green neon border */
+  box-shadow: 0 0 20px #00ff99;   /* Outer green glow */
+  border-radius: 15px;
   padding: 20px;
-  border-radius: 12px;
-  width: 80%;
-  max-width: 600px;
-  margin: 40px auto;
-  box-shadow: 0px 0px 20px rgba(0, 255, 255, 0.5);
+  width: 60%;        /* Increased from 50% to 60% */
+  max-width: 450px;  /* Increased from 400px to 450px */
+  margin: 20px auto;
+  text-align: center;
 }
 
 .countdown-title {
-  font-size: 1.8rem;
+  font-size: 1.2rem;
   font-weight: bold;
   color: #ffcc00;
-  text-shadow: 0px 0px 12px rgba(255, 255, 255, 0.9), 0px 0px 25px rgba(0, 255, 255, 0.8);
+  text-shadow:
+    0 0 12px rgba(255, 204, 0, 0.7),
+    0 0 25px rgba(255, 255, 0, 0.8);
   text-transform: uppercase;
+  margin-bottom: 15px;
 }
 
-.countdown-timer {
-  font-size: 2.5rem;
+.countdown-time {
+  font-size: 2rem;
   font-weight: bold;
-  margin-top: 15px;
-  color: #00ff99;
-  text-shadow: 0px 0px 20px rgba(0, 255, 255, 1);
+  color: #00ff99;                /* Bright green text */
+  text-shadow: 0 0 15px #00ff99; /* Green neon glow */
+  margin: 10px 0;
+  background: #000;
+  border: 2px solid #00ff99;
+  border-radius: 10px;
+  padding: 10px 20px;
+  display: inline-block;
 }
 
-.countdown-subtext {
-  font-size: 1rem;
+.countdown-info {
+  font-size: 0.75rem; /* Smaller text */
   margin-top: 10px;
   color: rgba(255, 255, 255, 0.7);
+  white-space: nowrap; /* Force one line */
 }
+
+.countdown-note {
+  font-size: 0.7rem;  /* Slightly smaller to avoid overflow */
+  margin-top: 5px;
+  color: #ccc;
+  white-space: nowrap; /* Force one line */
+}
+
