@@ -1,21 +1,26 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Outlet } from "react-router-dom";
 import { ConnectionProvider, WalletProvider } from "@solana/wallet-adapter-react";
 import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
 import { clusterApiUrl } from "@solana/web3.js";
 import App from "./App";
 import Referrals from "./pages/Referrals";
 import About from "./pages/About";
-import Vendors from "./pages/Vendors"; // Import Vendors Page
-import ProductList from "./pages/ProductList"; // Product List Page
-import Giveaways from "./pages/Giveaways"; // Giveaways Page
-import StrawberryFritter from "./pages/StrawberryFritter"; // Strawberry Fritter Page
-import Plumz from "./pages/Plumz"; // Plumz Page
-import HoneyDewPapaya from "./pages/HoneyDewPapaya"; // HoneyDew Papaya Page
-import BathSalts from "./pages/BathSalts"; // BathSalts Page
+import Vendors from "./pages/Vendors"; // Vendors list page
+import CoopersGlass from "./pages/CoopersGlass"; // Dedicated CoopersGlass vendor page
+import CoopersGlassProduct1 from "./pages/CoopersGlassProduct1"; // Dedicated product page for CoopersGlass Product 1
+import ProductList from "./pages/ProductList"; // Dynamic product list for other vendors
+import Giveaways from "./pages/Giveaways";
+import StrawberryFritter from "./pages/StrawberryFritter";
+import Plumz from "./pages/Plumz";
+import HoneyDewPapaya from "./pages/HoneyDewPapaya";
+import BathSalts from "./pages/BathSalts";
 
 const endpoint = clusterApiUrl("mainnet-beta");
+
+// Create a wrapper for nested vendor routes.
+const VendorsWrapper = () => <Outlet />;
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -27,8 +32,20 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               <Route path="/" element={<App />} />
               <Route path="/referrals" element={<Referrals />} />
               <Route path="/about" element={<About />} />
-              <Route path="/vendors" element={<Vendors />} />
-              <Route path="/vendors/:vendorId" element={<ProductList />} />
+              
+              {/* Nested vendor-related routes */}
+              <Route path="/vendors" element={<VendorsWrapper />}>
+                {/* Index route: shows Vendors page when URL is exactly "/vendors" */}
+                <Route index element={<Vendors />} />
+                {/* Dedicated CoopersGlass vendor page */}
+                <Route path="coopersglass" element={<CoopersGlass />} />
+                {/* Dynamic route for any other vendor */}
+                <Route path=":vendorId" element={<ProductList />} />
+              </Route>
+
+              {/* Dedicated product page for Coopers Glass Product 1 */}
+              <Route path="/coopersglass/product1" element={<CoopersGlassProduct1 />} />
+              
               <Route path="/giveaways" element={<Giveaways />} />
               <Route path="/strawberry-fritter" element={<StrawberryFritter />} />
               <Route path="/plumz" element={<Plumz />} />

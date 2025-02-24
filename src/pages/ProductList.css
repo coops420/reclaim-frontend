@@ -86,13 +86,27 @@
 }
 
 .product-item:hover .product-hover {
-  height: 100%; /* ✅ Changed from 50% to 100% so text isn't cut off */
+  height: 100%; /* 🔥 Changed from 50% to 100% so text isn't cut off */
 }
 
 .product-name,
 .product-price {
   margin: 5px 0;
   font-size: 14px;
+}
+
+/* 🔹 Retail & Sale Prices (New) */
+.product-retail-price {
+  font-size: 12px;
+  color: #ccc;       /* Light gray for the crossed-out price */
+  margin: 2px 0;
+}
+
+.product-sale-price {
+  font-size: 14px;
+  color: #00ff99;    /* Bright green for sale price */
+  font-weight: bold;
+  margin: 2px 0;
 }
 
 /* 🔹 Product Details Page */

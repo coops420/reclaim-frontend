@@ -6,20 +6,20 @@ const CountdownTimer = () => {
     let now = new Date();
     let nextTarget = new Date(now);
 
-    if (now.getDay() === 0) {
-      nextTarget.setDate(now.getDate() + 1);
-      nextTarget.setHours(0, 0, 0, 0);
-    } else {
-      let daysUntilMonday = (8 - now.getDay()) % 7;
-      nextTarget.setDate(now.getDate() + daysUntilMonday);
-      nextTarget.setHours(0, 0, 0, 0);
-    }
+    // Calculate days until the next Monday
+    let daysUntilMonday = (8 - now.getDay()) % 7;
+    if (daysUntilMonday === 0) daysUntilMonday = 7; // Ensure it's always next Monday
+
+    nextTarget.setDate(now.getDate() + daysUntilMonday);
+    nextTarget.setHours(0, 0, 0, 0);
+    
     return nextTarget;
   };
 
   const calculateTimeLeft = () => {
     const now = new Date();
-    const difference = getNextMondayMidnight() - now;
+    const targetTime = getNextMondayMidnight();
+    const difference = targetTime - now;
 
     if (difference > 0) {
       return {
@@ -36,7 +36,14 @@ const CountdownTimer = () => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setTimeLeft(calculateTimeLeft());
+      const newTimeLeft = calculateTimeLeft();
+
+      if (newTimeLeft.days === 0 && newTimeLeft.hours === 0 && newTimeLeft.minutes === 0 && newTimeLeft.seconds === 0) {
+        // Restart the timer by updating state
+        setTimeLeft(calculateTimeLeft());
+      } else {
+        setTimeLeft(newTimeLeft);
+      }
     }, 1000);
 
     return () => clearInterval(timer);
@@ -55,3 +62,4 @@ const CountdownTimer = () => {
 };
 
 export default CountdownTimer;
+
