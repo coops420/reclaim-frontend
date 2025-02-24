@@ -9,8 +9,9 @@ import Referrals from "./pages/Referrals";
 import About from "./pages/About";
 import Vendors from "./pages/Vendors"; // Vendors list page
 import CoopersGlass from "./pages/CoopersGlass"; // Dedicated CoopersGlass vendor page
-import CoopersGlassProduct1 from "./pages/CoopersGlassProduct1"; // Coopers Glass Product 1
-import CoopersGlassProduct2 from "./pages/CoopersGlassProduct2"; // Coopers Glass Product 2 (new)
+import CoopersGlassProduct1 from "./pages/CoopersGlassProduct1"; // Product 1 page
+import CoopersGlassProduct2 from "./pages/CoopersGlassProduct2"; // Product 2 page
+import CoopersGlassProduct3 from "./pages/CoopersGlassProduct3"; // Product 3 page
 import ProductList from "./pages/ProductList"; // Dynamic product list for other vendors
 import Giveaways from "./pages/Giveaways";
 import StrawberryFritter from "./pages/StrawberryFritter";
@@ -33,20 +34,22 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               <Route path="/" element={<App />} />
               <Route path="/referrals" element={<Referrals />} />
               <Route path="/about" element={<About />} />
-              
+
               {/* Nested vendor-related routes */}
               <Route path="/vendors" element={<VendorsWrapper />}>
-                {/* Index route: shows Vendors page when URL is exactly "/vendors" */}
+                {/* When URL is exactly "/vendors", show the Vendors page */}
                 <Route index element={<Vendors />} />
-                {/* Dedicated CoopersGlass vendor page */}
+                {/* Dedicated vendor pages */}
+                <Route path="gorillapack" element={<ProductList />} />
                 <Route path="coopersglass" element={<CoopersGlass />} />
-                {/* Dynamic route for any other vendor */}
+                {/* Any other vendor dynamically */}
                 <Route path=":vendorId" element={<ProductList />} />
               </Route>
 
-              {/* Dedicated product pages */}
+              {/* Dedicated product pages for Coopers Glass */}
               <Route path="/coopersglass/product1" element={<CoopersGlassProduct1 />} />
               <Route path="/coopersglass/product2" element={<CoopersGlassProduct2 />} />
+              <Route path="/coopersglass/product3" element={<CoopersGlassProduct3 />} />
 
               <Route path="/giveaways" element={<Giveaways />} />
               <Route path="/strawberry-fritter" element={<StrawberryFritter />} />
@@ -60,5 +63,4 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     </ConnectionProvider>
   </React.StrictMode>
 );
-
 
