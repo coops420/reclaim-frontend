@@ -8,7 +8,7 @@ import coopersGlassImg from "../assets/coopersglass.jpg";
 const Vendors = () => {
   return (
     <div className="vendors-container">
-      {/* 🔹 Navigation Buttons */}
+      {/* Navigation Buttons */}
       <nav className="nav-links" style={{ marginTop: "-10px" }}>
         <Link to="/" className="nav-button">Home</Link>
         <Link to="/referrals" className="nav-button">Buy $Claim Now (desktop)</Link>
@@ -17,11 +17,11 @@ const Vendors = () => {
         <Link to="/giveaways" className="nav-button">AirDrops & Giveaways</Link>
       </nav>
 
-      {/* 2) Reuse the same <h1> but keep its class "page-title" */}
+      {/* Page Title */}
       <h1 className="page-title">VENDORS</h1>
 
       <div className="vendors-grid">
-        {/* Existing Vendor */}
+        {/* Existing Vendor: Gorilla Pack Genetics */}
         <Link to="/vendors/gorillapack" className="vendor-item">
           <img
             src={gorillaPackImage}
@@ -46,4 +46,3 @@ const Vendors = () => {
 };
 
 export default Vendors;
-
