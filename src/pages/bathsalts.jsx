@@ -5,12 +5,11 @@ import { getClaimPrice } from "../components/TokenPrice";
 import emailjs from "emailjs-com";
 import "./ProductList.css";
 import vendorImage from "../assets/gorillapackgenetics.webp";
-import plumzItem from "../assets/plumz.jpg"; // Ensure this image exists in your assets folder
+import bathsaltsImage from "../assets/bathsalts.jpg"; // Ensure this image exists
 
-// Payment info (same as for other products)
+// Payment info (same for all products)
 const recipientWallet = "2367uZx5WMJgMqpSyTLycN5Uhh1koZoC51Bw2gfypxpt";
 const CLAIM_TOKEN_ADDRESS = "EkuBwtKVU1x5N2z1VESqBTZFnsQuWuxyQt9LDGqkJsk4";
-const priceUSD = 50; // Price per item in USD
 
 // List of US states for the dropdown (U.S. addresses)
 const usStates = [
@@ -68,11 +67,11 @@ const usStates = [
 
 // EmailJS credentials
 const serviceID = "service_c4kj8it";
-const sellerTemplateID = "template_5rj6drh";  // Seller template remains the same
-const buyerTemplateID = "template_3mus039";   // Buyer template remains the same
+const sellerTemplateID = "template_5rj6drh";
+const buyerTemplateID = "template_3mus039";
 const publicKey = "BFAA9yJvj1yAllF9o";
 
-const Plumz = () => {
+const BathSalts = () => {
   const [claimPrice, setClaimPrice] = useState(null);
   const [solanaPayURL, setSolanaPayURL] = useState("");
   const [loading, setLoading] = useState(true);
@@ -80,7 +79,11 @@ const Plumz = () => {
   const [quantity, setQuantity] = useState(1);
   const [emailSent, setEmailSent] = useState(false);
 
-  // Detailed shipping info (U.S. addresses only) - wallet confirmation field removed
+  // Variant selection: "18ths" or "zips"
+  const [variant, setVariant] = useState("18ths");
+  const [usdPrice, setUsdPrice] = useState(40);
+
+  // Shipping info (U.S. addresses)
   const [orderDetails, setOrderDetails] = useState({
     fullName: "",
     email: "",
@@ -91,7 +94,12 @@ const Plumz = () => {
     zip: "",
   });
 
-  // Fetch the current $CLAIM price
+  // Update USD price based on variant
+  useEffect(() => {
+    setUsdPrice(variant === "18ths" ? 40 : 200);
+  }, [variant]);
+
+  // Fetch $CLAIM price
   useEffect(() => {
     const fetchPrice = async () => {
       try {
@@ -110,46 +118,49 @@ const Plumz = () => {
     fetchPrice();
   }, []);
 
-  // Generate the Solana Pay URL for Plumz
+  // Generate Solana Pay URL
   useEffect(() => {
     if (claimPrice) {
-      const totalUSD = priceUSD * quantity;
-      const totalClaimAmount = (totalUSD / claimPrice).toFixed(6);
-      // Update label and message to "Plumz"
-      const url = `solana:${recipientWallet}?amount=${totalClaimAmount}&spl-token=${CLAIM_TOKEN_ADDRESS}&label=Plumz&message=Purchase%20of%20${quantity}%20Plumz`;
+      const tokenAmount = usdPrice * quantity;
+      const url = `solana:${recipientWallet}?amount=${tokenAmount}&spl-token=${CLAIM_TOKEN_ADDRESS}&label=BathSalts%20${encodeURIComponent(
+        variant
+      )}&message=Purchase%20of%20BathSalts%20${encodeURIComponent(variant)}`;
       setSolanaPayURL(url);
     }
-  }, [claimPrice, quantity]);
+  }, [claimPrice, quantity, variant, usdPrice]);
 
-  // Handle sending order confirmation emails (to seller & buyer)
+  // Handle Order Confirmation
   const handleSendConfirmation = () => {
     const { fullName, email, address1, city, usState, zip } = orderDetails;
+
     if (!fullName || !email || !address1 || !city || !usState || !zip) {
       alert("Please fill out all required shipping details.");
       return;
     }
 
-    const shippingAddress = `${address1}${orderDetails.address2 ? ", " + orderDetails.address2 : ""}, ${city}, ${usState} ${zip}`;
-    const totalUSD = priceUSD * quantity;
+    const shippingAddress = `${address1}${
+      orderDetails.address2 ? ", " + orderDetails.address2 : ""
+    }, ${city}, ${usState} ${zip}`;
+    const totalUSD = usdPrice * quantity;
     const totalCLAIM = claimPrice ? (totalUSD / claimPrice).toFixed(6) : "N/A";
 
     const templateParams = {
       from_name: fullName,
       email: email,
       shippingAddress: shippingAddress,
-      product: "Plumz",
+      product: `BathSalts ${variant}`,
       quantity: quantity,
       totalUSD: totalUSD,
       totalCLAIM: totalCLAIM,
       solanaPayURL: solanaPayURL,
     };
 
-    // Send email to seller
-    emailjs.send(serviceID, sellerTemplateID, { ...templateParams, to_name: "Seller" }, publicKey)
-      .then(() => {
-        // Then send email to buyer
-        return emailjs.send(serviceID, buyerTemplateID, { ...templateParams, to_name: fullName }, publicKey);
-      })
+    // Send email to seller, then buyer
+    emailjs
+      .send(serviceID, sellerTemplateID, { ...templateParams, to_name: "Seller" }, publicKey)
+      .then(() =>
+        emailjs.send(serviceID, buyerTemplateID, { ...templateParams, to_name: fullName }, publicKey)
+      )
       .then(() => {
         alert("Order confirmation sent to both seller and buyer!");
         setEmailSent(true);
@@ -178,9 +189,31 @@ const Plumz = () => {
 
       {/* Product Details Card (Centered) */}
       <div className="product-details card" style={{ textAlign: "center" }}>
-        <img src={plumzItem} alt="Plumz" className="product-image" />
-        <h2 className="product-name">Plumz</h2>
-        <p className="product-price">${priceUSD.toFixed(2)} USD each</p>
+        <img src={bathsaltsImage} alt={`BathSalts ${variant}`} className="product-image" />
+        <h2 className="product-name">BathSalts {variant}</h2>
+        <p className="product-price">${usdPrice.toFixed(2)} USD each</p>
+
+        {/* Variant Selector (Below the Picture & Price) */}
+        <div className="variant-selector" style={{ textAlign: "center", margin: "1rem 0" }}>
+          <label style={{ marginRight: "1rem" }}>
+            <input
+              type="radio"
+              value="18ths"
+              checked={variant === "18ths"}
+              onChange={(e) => setVariant(e.target.value)}
+            />
+            BathSalts 18ths
+          </label>
+          <label>
+            <input
+              type="radio"
+              value="zips"
+              checked={variant === "zips"}
+              onChange={(e) => setVariant(e.target.value)}
+            />
+            BathSalts zips
+          </label>
+        </div>
 
         {/* Quantity Selector */}
         <div className="quantity-container" style={{ margin: "1rem 0" }}>
@@ -199,7 +232,7 @@ const Plumz = () => {
           {loading
             ? "Loading $CLAIM price..."
             : claimPrice
-              ? `≈ ${(priceUSD * quantity / claimPrice).toFixed(6)} $CLAIM`
+              ? `≈ ${(usdPrice * quantity / claimPrice).toFixed(6)} $CLAIM`
               : "N/A"}
         </p>
 
@@ -218,7 +251,8 @@ const Plumz = () => {
           1) Scan the QR code above with your mobile camera or Phantom’s built-in scanner.<br />
           2) Complete the transaction in your Phantom Wallet.<br />
           3) After payment is completed, fill out the shipping details below (U.S. addresses only).<br />
-          4) Click <strong>Send Order Confirmation</strong> to notify the seller.
+          4) Enter the first 2 and last 2 letters of your Solana wallet address for confirmation.<br />
+          5) Click <strong>Send Order Confirmation</strong> to notify the seller.
         </p>
       </div>
 
@@ -287,6 +321,8 @@ const Plumz = () => {
               onChange={(e) => setOrderDetails({ ...orderDetails, zip: e.target.value })}
             />
           </div>
+          {/* Wallet Confirmation Field Removed */}
+          {/* Everything else remains the same */}
 
           <button
             className="send-confirmation-btn"
@@ -316,5 +352,6 @@ const Plumz = () => {
   );
 };
 
-export default Plumz;
+export default BathSalts;
+
 

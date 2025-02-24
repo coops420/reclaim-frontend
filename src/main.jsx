@@ -13,6 +13,7 @@ import Giveaways from "./pages/Giveaways"; // Giveaways Page
 import StrawberryFritter from "./pages/StrawberryFritter"; // Strawberry Fritter Page
 import Plumz from "./pages/Plumz"; // Plumz Page
 import HoneyDewPapaya from "./pages/HoneyDewPapaya"; // HoneyDew Papaya Page
+import BathSalts from "./pages/BathSalts"; // BathSalts Page
 
 const endpoint = clusterApiUrl("mainnet-beta");
 
@@ -32,6 +33,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               <Route path="/strawberry-fritter" element={<StrawberryFritter />} />
               <Route path="/plumz" element={<Plumz />} />
               <Route path="/honeydew-papaya" element={<HoneyDewPapaya />} />
+              <Route path="/bathsalts" element={<BathSalts />} />
             </Routes>
           </Router>
         </WalletModalProvider>
@@ -39,3 +41,4 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     </ConnectionProvider>
   </React.StrictMode>
 );
+

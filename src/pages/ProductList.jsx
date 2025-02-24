@@ -4,7 +4,8 @@ import "./ProductList.css";
 import vendorImage from "../assets/gorillapackgenetics.webp"; // Vendor image
 import strawberryFritter from "/src/assets/applefritter.jpg"; // Strawberry Fritter image
 import plumzImage from "/src/assets/plumz.jpg"; // Plumz image
-import honeydewPapayaImage from "/src/assets/honeydewpapaya.jpg"; // HoneyDew Papaya image
+import honeydewPapayaImage from "../assets/honeydewpapaya.jpg"; // HoneyDew Papaya image
+import bathsaltsImage from "../assets/bathsalts.jpg"; // BathSalts image
 
 const ProductList = () => {
   const { vendorId } = useParams();
@@ -59,10 +60,22 @@ const ProductList = () => {
             </div>
           </Link>
         </div>
+
+        {/* BathSalts Product */}
+        <div className="product-item">
+          <Link to="/bathsalts">
+            <img src={bathsaltsImage} alt="BathSalts" className="product-image" />
+            <div className="product-hover">
+              <p className="product-name">BathSalts</p>
+              <p className="product-price">💲50.00</p>
+            </div>
+          </Link>
+        </div>
       </div>
     </div>
   );
 };
 
 export default ProductList;
+
 

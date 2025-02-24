@@ -80,7 +80,7 @@ const HoneyDewPapaya = () => {
   const [quantity, setQuantity] = useState(1);
   const [emailSent, setEmailSent] = useState(false);
 
-  // Detailed shipping info (U.S. addresses only) + wallet snippet
+  // Detailed shipping info (U.S. addresses only)
   const [orderDetails, setOrderDetails] = useState({
     fullName: "",
     email: "",
@@ -89,7 +89,6 @@ const HoneyDewPapaya = () => {
     city: "",
     usState: "",
     zip: "",
-    walletSnippet: "",
   });
 
   // Fetch the current $CLAIM price
@@ -116,7 +115,7 @@ const HoneyDewPapaya = () => {
     if (claimPrice) {
       const totalUSD = priceUSD * quantity;
       const totalClaimAmount = (totalUSD / claimPrice).toFixed(6);
-      // Update label and message to "HoneyDew Papaya"
+      // Label and message updated to "HoneyDew Papaya"
       const url = `solana:${recipientWallet}?amount=${totalClaimAmount}&spl-token=${CLAIM_TOKEN_ADDRESS}&label=HoneyDew%20Papaya&message=Purchase%20of%20${quantity}%20HoneyDew%20Papaya`;
       setSolanaPayURL(url);
     }
@@ -124,13 +123,9 @@ const HoneyDewPapaya = () => {
 
   // Handle sending order confirmation emails (to seller & buyer)
   const handleSendConfirmation = () => {
-    const { fullName, email, address1, city, usState, zip, walletSnippet } = orderDetails;
+    const { fullName, email, address1, city, usState, zip } = orderDetails;
     if (!fullName || !email || !address1 || !city || !usState || !zip) {
       alert("Please fill out all required shipping details.");
-      return;
-    }
-    if (!walletSnippet || walletSnippet.length !== 4) {
-      alert("Please enter the first 2 and last 2 letters of your Solana wallet address (exactly 4 characters).");
       return;
     }
 
@@ -147,7 +142,6 @@ const HoneyDewPapaya = () => {
       totalUSD: totalUSD,
       totalCLAIM: totalCLAIM,
       solanaPayURL: solanaPayURL,
-      walletSnippet: walletSnippet,
     };
 
     // Send email to seller
@@ -224,8 +218,7 @@ const HoneyDewPapaya = () => {
           1) Scan the QR code above with your mobile camera or Phantom’s built-in scanner.<br />
           2) Complete the transaction in your Phantom Wallet.<br />
           3) After payment is completed, fill out the shipping details below (U.S. addresses only).<br />
-          4) Enter the first 2 and last 2 letters of your Solana wallet address for confirmation.<br />
-          5) Click <strong>Send Order Confirmation</strong> to notify the seller.
+          4) Click <strong>Send Order Confirmation</strong> to notify the seller.
         </p>
       </div>
 
@@ -292,15 +285,6 @@ const HoneyDewPapaya = () => {
               type="text"
               value={orderDetails.zip}
               onChange={(e) => setOrderDetails({ ...orderDetails, zip: e.target.value })}
-            />
-          </div>
-          <div className="order-form-field">
-            <label>Wallet Confirmation (first 2 &amp; last 2 letters)</label>
-            <input
-              type="text"
-              value={orderDetails.walletSnippet}
-              onChange={(e) => setOrderDetails({ ...orderDetails, walletSnippet: e.target.value.trim() })}
-              placeholder="e.g. 4X...c0"
             />
           </div>
 

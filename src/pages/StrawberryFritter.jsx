@@ -80,7 +80,7 @@ const StrawberryFritter = () => {
   const [quantity, setQuantity] = useState(1);
   const [emailSent, setEmailSent] = useState(false);
 
-  // Shipping info + wallet snippet
+  // Shipping info (U.S. addresses only) – wallet confirmation removed
   const [orderDetails, setOrderDetails] = useState({
     fullName: "",
     email: "",
@@ -89,7 +89,6 @@ const StrawberryFritter = () => {
     city: "",
     usState: "",
     zip: "",
-    walletSnippet: "",
   });
 
   // Fetch $CLAIM price
@@ -123,13 +122,9 @@ const StrawberryFritter = () => {
 
   // Handle sending order confirmation emails
   const handleSendConfirmation = () => {
-    const { fullName, email, address1, city, usState, zip, walletSnippet } = orderDetails;
+    const { fullName, email, address1, city, usState, zip } = orderDetails;
     if (!fullName || !email || !address1 || !city || !usState || !zip) {
       alert("Please fill out all required shipping details.");
-      return;
-    }
-    if (!walletSnippet || walletSnippet.length !== 4) {
-      alert("Please enter the first 2 and last 2 letters of your Solana wallet address (exactly 4 characters).");
       return;
     }
 
@@ -146,7 +141,6 @@ const StrawberryFritter = () => {
       totalUSD: totalUSD,
       totalCLAIM: totalCLAIM,
       solanaPayURL: solanaPayURL,
-      walletSnippet: walletSnippet,
     };
 
     // Send email to seller
@@ -218,14 +212,12 @@ const StrawberryFritter = () => {
 
       {/* Centered Instructions Right Below QR Code */}
       <div style={{ textAlign: "center", marginTop: "1rem" }}>
-        <p>(If using a mobile camera app, scanning will open Phantom with payment details.)</p>
         <h3>How to Complete Your Purchase</h3>
         <p style={{ lineHeight: "1.6" }}>
           1) Scan the QR code above with your mobile camera or Phantom’s built-in scanner.<br />
           2) Complete the transaction in your Phantom Wallet.<br />
           3) After payment is completed, fill out the shipping details below (U.S. addresses only).<br />
-          4) Enter the first 2 and last 2 letters of your Solana wallet address for confirmation.<br />
-          5) Click <strong>Send Order Confirmation</strong> to notify the seller.
+          4) Click <strong>Send Order Confirmation</strong> to notify the seller.
         </p>
       </div>
 
@@ -294,15 +286,6 @@ const StrawberryFritter = () => {
               onChange={(e) => setOrderDetails({ ...orderDetails, zip: e.target.value })}
             />
           </div>
-          <div className="order-form-field">
-            <label>Wallet Confirmation (first 2 &amp; last 2 letters)</label>
-            <input
-              type="text"
-              value={orderDetails.walletSnippet}
-              onChange={(e) => setOrderDetails({ ...orderDetails, walletSnippet: e.target.value.trim() })}
-              placeholder="e.g. 4X..c0"
-            />
-          </div>
 
           <button
             className="send-confirmation-btn"
@@ -317,8 +300,8 @@ const StrawberryFritter = () => {
       {/* Telegram Support Link (Centered, Below Everything) */}
       <div style={{ textAlign: "center", marginTop: "1.5rem" }}>
         <p>
-          If having trouble or need help, join
-          &nbsp;<a
+          If having trouble or need help, join&nbsp;
+          <a
             href="https://t.me/reclaimtoken"
             target="_blank"
             rel="noopener noreferrer"
