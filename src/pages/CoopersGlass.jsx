@@ -1,12 +1,16 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import "./ProductList.css";
-import coopersGlassImage from "../assets/coopersglass.jpg"; // Vendor image for Coopers Glass
+import { Link, Outlet } from "react-router-dom";
+import "./Vendors.css";
+import gorillaPackImage from "../assets/gorillapackgenetics.webp";
+// Import Coopers Glass vendor image
+import coopersGlassImg from "../assets/coopersglass.jpg";
 
 // Example product images (update with real images)
-import product1 from "../assets/sonicspillproof.jpg";
-import product2 from "../assets/lilactiptop.jpg";
-import product3 from "../assets/neonpuffer.jpg";
+import product1 from "../assets/sonicspillproof.jpg";   // Sonic Cropal Spillproof
+import product2 from "../assets/lilactiptop.jpg";          // Lilac TipTop
+import product3 from "../assets/neonpuffer.jpg";           // Electric Neon Puffer
+import product4 from "../assets/mintcropalpuffer.jpg";       // Mint Crushed Opal Puffer
+import product5 from "../assets/soniccropalpuffer.jpg";      // Sonic Crushed Opal Puffer
 
 const CoopersGlass = () => {
   return (
@@ -23,17 +27,20 @@ const CoopersGlass = () => {
       {/* Vendor Header */}
       <div className="vendor-header">
         <img
-          src={coopersGlassImage}
+          src={coopersGlassImg}
           alt="Coopers Glass"
-          className="vendor-image product-image"
+          className="vendor-image"
         />
       </div>
 
-      {/* Products Grid */}
-      <div className="products-grid">
+      {/* Render nested routes here if a product is active */}
+      <Outlet />
+
+      {/* Products Grid (displayed by default if no nested route is active) */}
+      <div className="vendors-grid">
         {/* Product 1 */}
         <div className="product-item">
-          <Link to="/coopersglass/product1">
+          <Link to="/vendors/coopersglass/product1">
             <img src={product1} alt="Product 1" className="product-image" />
             <div className="product-hover">
               <p className="product-name">Sonic Cropal Spillproof</p>
@@ -47,7 +54,7 @@ const CoopersGlass = () => {
 
         {/* Product 2 */}
         <div className="product-item">
-          <Link to="/coopersglass/product2">
+          <Link to="/vendors/coopersglass/product2">
             <img src={product2} alt="Product 2" className="product-image" />
             <div className="product-hover">
               <p className="product-name">Lilac TipTop</p>
@@ -61,7 +68,7 @@ const CoopersGlass = () => {
 
         {/* Product 3 */}
         <div className="product-item">
-          <Link to="/coopersglass/product3">
+          <Link to="/vendors/coopersglass/product3">
             <img src={product3} alt="Product 3" className="product-image" />
             <div className="product-hover">
               <p className="product-name">Electric Neon Puffer</p>
@@ -72,9 +79,39 @@ const CoopersGlass = () => {
             </div>
           </Link>
         </div>
+
+        {/* Product 4 */}
+        <div className="product-item">
+          <Link to="/vendors/coopersglass/product4">
+            <img src={product4} alt="Product 4" className="product-image" />
+            <div className="product-hover">
+              <p className="product-name">Mint Crushed Opal Puffer</p>
+              <p className="product-retail-price">
+                <del>Retail: $375.00</del>
+              </p>
+              <p className="product-sale-price">Claim: $275.00</p>
+            </div>
+          </Link>
+        </div>
+
+        {/* Product 5 */}
+        <div className="product-item">
+          <Link to="/vendors/coopersglass/product5">
+            <img src={product5} alt="Product 5" className="product-image" />
+            <div className="product-hover">
+              <p className="product-name">Sonic Crushed Opal Puffer</p>
+              <p className="product-retail-price">
+                <del>Retail: $350.00</del>
+              </p>
+              <p className="product-sale-price">Claim: $275.00</p>
+            </div>
+          </Link>
+        </div>
       </div>
     </div>
   );
 };
 
 export default CoopersGlass;
+
+
