@@ -13,6 +13,8 @@ import product4 from "../assets/mintcropalpuffer.jpg";       // Mint Crushed Opa
 import product5 from "../assets/soniccropalpuffer.jpg";      // Sonic Crushed Opal Puffer
 import product6 from "../assets/blackcropalpuffer.jpg";      // Black Crushed Opal Puffer
 import product7 from "../assets/hybridneon.png";             // Electric Neon Hybrid Proxy Peak Spillproof
+import product8 from "../assets/lvpuffer.jpg";               // LV Crushed Opal Puffer
+import product9 from "../assets/eaglesXL.jpg";              // Eagles XL Joystick Cropal Stick
 
 const CoopersGlass = () => {
   return (
@@ -28,11 +30,7 @@ const CoopersGlass = () => {
 
       {/* Vendor Header */}
       <div className="vendor-header">
-        <img
-          src={coopersGlassImg}
-          alt="Coopers Glass"
-          className="vendor-image"
-        />
+        <img src={coopersGlassImg} alt="Coopers Glass" className="vendor-image" />
       </div>
 
       {/* Render nested routes here if a product is active */}
@@ -112,7 +110,7 @@ const CoopersGlass = () => {
           </Link>
         </div>
 
-        {/* Product 7 - New Product: Electric Neon Hybrid Proxy Peak Spillproof */}
+        {/* Product 7 */}
         <div className="product-item">
           <Link to="/vendors/coopersglass/product7">
             <img src={product7} alt="Electric Neon Hybrid Proxy Peak Spillproof" className="product-image" />
@@ -123,10 +121,33 @@ const CoopersGlass = () => {
             </div>
           </Link>
         </div>
+
+        {/* Product 8 */}
+        <div className="product-item">
+          <Link to="/vendors/coopersglass/product8">
+            <img src={product8} alt="LV Crushed Opal Puffer" className="product-image" />
+            <div className="product-hover">
+              <p className="product-name">LV Crushed Opal Puffer</p>
+              <p className="product-retail-price"><del>Retail: $425.00</del></p>
+              <p className="product-sale-price">Claim: $285.00</p>
+            </div>
+          </Link>
+        </div>
+
+        {/* Product 9 */}
+        <div className="product-item">
+          <Link to="/vendors/coopersglass/product9">
+            <img src={product9} alt="Eagles XL Joystick Cropal Stick" className="product-image" />
+            <div className="product-hover">
+              <p className="product-name">Eagles XL Joystick Cropal Stick</p>
+              <p className="product-retail-price"><del>Retail: $115.00</del></p>
+              <p className="product-sale-price">Claim: $85.00</p>
+            </div>
+          </Link>
+        </div>
       </div>
     </div>
   );
 };
 
 export default CoopersGlass;
-

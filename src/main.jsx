@@ -16,6 +16,8 @@ import CoopersGlassProduct4 from "./pages/CoopersGlassProduct4"; // Product 4 pa
 import CoopersGlassProduct5 from "./pages/CoopersGlassProduct5"; // Product 5 page
 import Cropalpuffer from "./pages/cropalpuffer.jsx"; // Product 6: Black Crushed Opal Puffer
 import NeonHybrid from "./pages/NeonHybrid.jsx"; // Product 7: Electric Neon Hybrid Proxy Peak Spillproof
+import LVCrushedOpalPuffer from "./pages/LVCrushedOpalPuffer"; // Product 8: LV Crushed Opal Puffer
+import EaglesXLJoystickCropalStick from "./pages/EaglesXL.jsx"; // Product 9: Eagles XL Joystick Cropal Stick
 import ProductList from "./pages/ProductList"; // Dynamic product list for other vendors
 import Giveaways from "./pages/Giveaways";
 import StrawberryFritter from "./pages/StrawberryFritter";
@@ -51,6 +53,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               <Route path="/vendors/coopersglass/product5" element={<CoopersGlassProduct5 />} />
               <Route path="/vendors/coopersglass/product6" element={<Cropalpuffer />} />
               <Route path="/vendors/coopersglass/product7" element={<NeonHybrid />} />
+              <Route path="/vendors/coopersglass/product8" element={<LVCrushedOpalPuffer />} />
+              <Route path="/vendors/coopersglass/product9" element={<EaglesXLJoystickCropalStick />} />
 
               {/* Fallback dynamic vendor route */}
               <Route path="/vendors/:vendorId" element={<ProductList />} />
