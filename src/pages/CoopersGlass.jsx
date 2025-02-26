@@ -12,6 +12,7 @@ import product3 from "../assets/neonpuffer.jpg";           // Electric Neon Puff
 import product4 from "../assets/mintcropalpuffer.jpg";       // Mint Crushed Opal Puffer
 import product5 from "../assets/soniccropalpuffer.jpg";      // Sonic Crushed Opal Puffer
 import product6 from "../assets/blackcropalpuffer.jpg";      // Black Crushed Opal Puffer
+import product7 from "../assets/hybridneon.png";             // Electric Neon Hybrid Proxy Peak Spillproof
 
 const CoopersGlass = () => {
   return (
@@ -27,7 +28,11 @@ const CoopersGlass = () => {
 
       {/* Vendor Header */}
       <div className="vendor-header">
-        <img src={coopersGlassImg} alt="Coopers Glass" className="vendor-image" />
+        <img
+          src={coopersGlassImg}
+          alt="Coopers Glass"
+          className="vendor-image"
+        />
       </div>
 
       {/* Render nested routes here if a product is active */}
@@ -95,14 +100,26 @@ const CoopersGlass = () => {
           </Link>
         </div>
 
-        {/* Product 6 - New Product: Black Crushed Opal Puffer */}
+        {/* Product 6 */}
         <div className="product-item">
-          <Link to="/vendors/coopersglass/cropalpuffer">
+          <Link to="/vendors/coopersglass/product6">
             <img src={product6} alt="Black Crushed Opal Puffer" className="product-image" />
             <div className="product-hover">
               <p className="product-name">Black Crushed Opal Puffer</p>
               <p className="product-retail-price"><del>Retail: $375.00</del></p>
               <p className="product-sale-price">Claim: $225.00</p>
+            </div>
+          </Link>
+        </div>
+
+        {/* Product 7 - New Product: Electric Neon Hybrid Proxy Peak Spillproof */}
+        <div className="product-item">
+          <Link to="/vendors/coopersglass/product7">
+            <img src={product7} alt="Electric Neon Hybrid Proxy Peak Spillproof" className="product-image" />
+            <div className="product-hover">
+              <p className="product-name">Electric Neon Hybrid Proxy Peak Spillproof</p>
+              <p className="product-retail-price"><del>Retail: $650.00</del></p>
+              <p className="product-sale-price">Claim: $450.00</p>
             </div>
           </Link>
         </div>
