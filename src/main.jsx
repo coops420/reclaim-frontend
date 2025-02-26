@@ -15,7 +15,7 @@ import CoopersGlassProduct3 from "./pages/CoopersGlassProduct3"; // Product 3 pa
 import CoopersGlassProduct4 from "./pages/CoopersGlassProduct4"; // Product 4 page
 import CoopersGlassProduct5 from "./pages/CoopersGlassProduct5"; // Product 5 page
 import Cropalpuffer from "./pages/cropalpuffer.jsx"; // Product 6: Black Crushed Opal Puffer
-import NeonHybrid from "./pages/neonhybrid.jsx"; // Product 7: Electric Neon Hybrid Proxy Peak Spillproof
+import NeonHybrid from "./pages/NeonHybrid.jsx"; // Product 7: Electric Neon Hybrid Proxy Peak Spillproof
 import ProductList from "./pages/ProductList"; // Dynamic product list for other vendors
 import Giveaways from "./pages/Giveaways";
 import StrawberryFritter from "./pages/StrawberryFritter";
@@ -61,3 +61,4 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     </ConnectionProvider>
   </React.StrictMode>
 );
+
