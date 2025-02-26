@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./ProductList.css";
 import vendorImage from "../assets/gorillapackgenetics.webp"; // Vendor image
 import strawberryFritter from "/src/assets/applefritter.jpg"; // Strawberry Fritter image
@@ -8,8 +8,6 @@ import honeydewPapayaImage from "../assets/honeydewpapaya.jpg"; // HoneyDew Papa
 import bathsaltsImage from "../assets/bathsalts.jpg"; // BathSalts image
 
 const ProductList = () => {
-  const { vendorId } = useParams();
-
   return (
     <div className="product-list-container">
       {/* Navigation Buttons */}
@@ -28,15 +26,17 @@ const ProductList = () => {
 
       {/* Products Grid */}
       <div className="products-grid">
-        {/* Strawberry Fritter Product */}
-        <div className="product-item">
-          <Link to="/strawberry-fritter">
-            <img src={strawberryFritter} alt="Strawberry Fritter Rosin" className="product-image" />
-            <div className="product-hover">
-              <p className="product-name">Strawberry Fritter Live Rosin</p>
-              <p className="product-price">💲50.00</p>
-            </div>
-          </Link>
+        {/* Strawberry Fritter Product (Sold Out, unclickable) */}
+        <div className="product-item sold-out">
+          <img
+            src={strawberryFritter}
+            alt="Strawberry Fritter Live Rosin"
+            className="product-image"
+          />
+          <div className="product-hover">
+            <p className="product-name">Strawberry Fritter Live Rosin</p>
+            <p className="product-price">Sold Out</p>
+          </div>
         </div>
 
         {/* Plumz Product */}
@@ -77,5 +77,3 @@ const ProductList = () => {
 };
 
 export default ProductList;
-
-
