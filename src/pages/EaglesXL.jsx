@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import QRCode from "react-qr-code";
 import { getClaimPrice } from "../components/TokenPrice";
 import emailjs from "emailjs-com";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { Connection, Transaction, SystemProgram, PublicKey } from "@solana/web3.js";
 import "./ProductList.css";
 import vendorImage from "../assets/coopersglass.jpg"; // Vendor image for Coopers Glass
 import productImage from "../assets/eaglesXL.jpg"; // Eagles XL Joystick Cropal Stick image
 
 // Payment info
-const recipientWallet = "AfEanUHHtW1Eqos85FNUJCm7WSKr5PyeqneBt1PURRpW"; // Updated wallet
-const CLAIM_TOKEN_ADDRESS = "EkuBwtKVU1x5N2z1VESqBTZFnsQuWuxyQt9LDGqkJsk4";
+const recipientWallet = "AfEanUHHtW1Eqos85FNUJCm7WSKr5PyeqneBt1PURRpW"; // Your recipient wallet address
+const CLAIM_TOKEN_ADDRESS = "EkuBwtKVU1x5N2z1VESqBTZFnsQuWuxyQt9LDGqkJsk4"; // Your token mint address
 
 // Prices for this product
 const retailUSD = 115; // Retail price for display
@@ -19,28 +21,19 @@ const saleUSD = 85;    // Final sale (Claim) price
 const serviceID = "service_c4kj8it";
 const sellerTemplateID = "cooper_au2yp3c"; // Dedicated seller template for Coopers Glass
 const buyerTemplateID = "template_3mus039";
-const publicKey = "BFAA9yJvj1yAllF9o";
+const publicKeyEmail = "BFAA9yJvj1yAllF9o";
+
+// Create a connection to Devnet
+const connection = new Connection("https://api.devnet.solana.com");
 
 const EaglesXLJoystickCropalStick = () => {
+  const { publicKey, sendTransaction, connected } = useWallet();
   const [claimPrice, setClaimPrice] = useState(null);
-  const [solanaPayURL, setSolanaPayURL] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [emailSent, setEmailSent] = useState(false);
 
-  // Shipping details state for global addresses
-  const [orderDetails, setOrderDetails] = useState({
-    fullName: "",
-    email: "",
-    address1: "",
-    address2: "",
-    city: "",
-    stateProvince: "",
-    postalCode: "",
-    country: "",
-  });
-
-  // 1) Fetch the current $CLAIM price
+  // Fetch the current $CLAIM price
   useEffect(() => {
     const fetchPrice = async () => {
       try {
@@ -59,49 +52,79 @@ const EaglesXLJoystickCropalStick = () => {
     fetchPrice();
   }, []);
 
-  // 2) Generate the Solana Pay URL using the sale price (85 USD)
-  useEffect(() => {
-    if (claimPrice) {
-      const totalClaimAmount = (saleUSD / claimPrice).toFixed(6);
-      const url = `solana:${recipientWallet}?amount=${totalClaimAmount}&spl-token=${CLAIM_TOKEN_ADDRESS}&label=Eagles%20XL%20Joystick%20Cropal%20Stick&message=Purchase%20of%20Eagles%20XL%20Joystick%20Cropal%20Stick`;
-      setSolanaPayURL(url);
-    }
-  }, [claimPrice]);
+  // Compute the token amount for the sale
+  const totalClaimAmount = claimPrice ? (saleUSD / claimPrice).toFixed(6) : "N/A";
 
-  // 3) Handle sending order confirmation emails
+  // Construct the Phantom Universal Link URL
+  const phantomUrl = `https://phantom.app/ul?app=YourAppName&recipient=${recipientWallet}&mint=${CLAIM_TOKEN_ADDRESS}&amount=${totalClaimAmount}&label=Eagles%20XL%20Joystick%20Cropal%20Stick&message=Purchase%20of%20Eagles%20XL%20Joystick%20Cropal%20Stick`;
+
+  // Handle wallet reconnection (force a disconnect then reconnect)
+  const handleReconnectWallet = useCallback(async () => {
+    if (window.solana && window.solana.isPhantom) {
+      try {
+        await window.solana.disconnect();
+        await window.solana.connect();
+        alert("Wallet reconnected successfully!");
+      } catch (err) {
+        console.error("Error reconnecting wallet:", err);
+        alert("Failed to reconnect wallet.");
+      }
+    } else {
+      alert("Phantom wallet not found!");
+    }
+  }, []);
+
+  // Handle sending order confirmation emails (unchanged)
   const handleSendConfirmation = () => {
-    const { fullName, email, address1, address2, city, stateProvince, postalCode, country } = orderDetails;
-    if (!fullName || !email || !address1 || !city || !stateProvince || !postalCode || !country) {
+    const formFields = document.querySelectorAll(".order-form input");
+    const orderData = Array.from(formFields).reduce((acc, input) => {
+      acc[input.name] = input.value;
+      return acc;
+    }, {});
+  
+    if (
+      !orderData.fullName ||
+      !orderData.email ||
+      !orderData.address1 ||
+      !orderData.city ||
+      !orderData.stateProvince ||
+      !orderData.postalCode ||
+      !orderData.country
+    ) {
       alert("Please fill out all required shipping details.");
       return;
     }
-    const shippingAddress = `${address1}${address2 ? ", " + address2 : ""}, ${city}, ${stateProvince}, ${postalCode}, ${country}`;
+  
+    const shippingAddress = `${orderData.address1}${
+      orderData.address2 ? ", " + orderData.address2 : ""
+    }, ${orderData.city}, ${orderData.stateProvince}, ${orderData.postalCode}, ${orderData.country}`;
+  
     const totalUSD = saleUSD;
     const totalCLAIM = claimPrice ? (saleUSD / claimPrice).toFixed(6) : "N/A";
-
+  
     const templateParams = {
-      from_name: fullName,
-      email,
+      from_name: orderData.fullName,
+      email: orderData.email,
       shippingAddress,
       product: "Eagles XL Joystick Cropal Stick",
       totalUSD,
       totalCLAIM,
-      solanaPayURL,
+      solanaPayURL: phantomUrl,
     };
-
+  
     emailjs
       .send(
         serviceID,
         sellerTemplateID,
         { ...templateParams, to_name: "Seller", seller_email: "moviezzy@hotmail.com" },
-        publicKey
+        publicKeyEmail
       )
       .then(() =>
         emailjs.send(
           serviceID,
           buyerTemplateID,
-          { ...templateParams, to_name: fullName },
-          publicKey
+          { ...templateParams, to_name: orderData.fullName },
+          publicKeyEmail
         )
       )
       .then(() => {
@@ -124,12 +147,12 @@ const EaglesXLJoystickCropalStick = () => {
         <Link to="/about" className="nav-button">About Us</Link>
         <Link to="/giveaways" className="nav-button">AirDrops & Giveaways</Link>
       </nav>
-
+  
       {/* Vendor Header */}
       <div className="vendor-header">
         <img src={vendorImage} alt="Coopers Glass" className="vendor-image" />
       </div>
-
+  
       {/* Product Details Card */}
       <div className="product-details card" style={{ textAlign: "center" }}>
         <img src={productImage} alt="Eagles XL Joystick Cropal Stick" className="product-image" />
@@ -140,17 +163,35 @@ const EaglesXLJoystickCropalStick = () => {
           {loading
             ? "Loading $CLAIM price..."
             : claimPrice
-            ? `≈ ${(saleUSD / claimPrice).toFixed(6)} $CLAIM`
+            ? `≈ ${totalClaimAmount} $CLAIM`
             : "N/A"}
         </p>
+  
         {/* QR Code Section */}
-        {solanaPayURL ? (
-          <QRCode value={solanaPayURL} size={180} />
-        ) : (
-          <p className="error-text">{error || "Generating QR Code..."}</p>
-        )}
+        {phantomUrl && <QRCode value={phantomUrl} size={180} />}
+  
+        {/* Buy Now Button */}
+        <div style={{ margin: "1rem 0" }}>
+          {phantomUrl && (
+            <a
+              href={phantomUrl}
+              className="buy-button"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Buy Now
+            </a>
+          )}
+        </div>
+  
+        {/* Reconnect Wallet Button */}
+        <div style={{ margin: "1rem 0" }}>
+          <button onClick={handleReconnectWallet} className="buy-button">
+            Reconnect Wallet
+          </button>
+        </div>
       </div>
-
+  
       {/* Purchase Instructions */}
       <div style={{ textAlign: "center", marginTop: "1rem" }}>
         <h3>How to Complete Your Purchase</h3>
@@ -161,7 +202,7 @@ const EaglesXLJoystickCropalStick = () => {
           4) Click <strong>Send Order Confirmation</strong> to notify the seller.
         </p>
       </div>
-
+  
       {/* Order Form */}
       <div className="order-instructions card" style={{ textAlign: "center" }}>
         <div className="order-form">
@@ -169,64 +210,72 @@ const EaglesXLJoystickCropalStick = () => {
             <label>Full Name (required)</label>
             <input
               type="text"
-              value={orderDetails.fullName}
-              onChange={(e) => setOrderDetails({ ...orderDetails, fullName: e.target.value })}
+              name="fullName"
+              value=""
+              onChange={() => {}}
             />
           </div>
           <div className="order-form-field">
             <label>Email (required)</label>
             <input
               type="email"
-              value={orderDetails.email}
-              onChange={(e) => setOrderDetails({ ...orderDetails, email: e.target.value })}
+              name="email"
+              value=""
+              onChange={() => {}}
             />
           </div>
           <div className="order-form-field">
             <label>Street Address (Line 1)</label>
             <input
               type="text"
-              value={orderDetails.address1}
-              onChange={(e) => setOrderDetails({ ...orderDetails, address1: e.target.value })}
+              name="address1"
+              value=""
+              onChange={() => {}}
             />
           </div>
           <div className="order-form-field">
             <label>Address Line 2 (Apt, Suite, etc.)</label>
             <input
               type="text"
-              value={orderDetails.address2}
-              onChange={(e) => setOrderDetails({ ...orderDetails, address2: e.target.value })}
+              name="address2"
+              value=""
+              onChange={() => {}}
             />
           </div>
           <div className="order-form-field">
             <label>City</label>
             <input
               type="text"
-              value={orderDetails.city}
-              onChange={(e) => setOrderDetails({ ...orderDetails, city: e.target.value })}
+              name="city"
+              value=""
+              onChange={() => {}}
             />
           </div>
           <div className="order-form-field">
             <label>State/Province</label>
             <input
               type="text"
-              value={orderDetails.stateProvince}
-              onChange={(e) => setOrderDetails({ ...orderDetails, stateProvince: e.target.value })}
+              name="stateProvince"
+              value=""
+              onChange={() => {}}
             />
           </div>
           <div className="order-form-field">
             <label>Postal/ZIP Code</label>
             <input
               type="text"
-              value={orderDetails.postalCode}
-              onChange={(e) => setOrderDetails({ ...orderDetails, postalCode: e.target.value })}
+              name="postalCode"
+              value=""
+              onChange={() => {}}
             />
           </div>
           <div className="order-form-field">
             <label>Country</label>
             <input
               type="text"
-              value={orderDetails.country}
-              onChange={(e) => setOrderDetails({ ...orderDetails, country: e.target.value })}
+              name="country"
+              value=""
+              onChange={() => {}}
             />
           </div>
           <button
@@ -238,7 +287,7 @@ const EaglesXLJoystickCropalStick = () => {
           </button>
         </div>
       </div>
-
+  
       {/* Telegram Support Link */}
       <div style={{ textAlign: "center", marginTop: "1.5rem" }}>
         <p>

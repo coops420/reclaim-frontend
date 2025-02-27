@@ -50,15 +50,13 @@ const ProductList = () => {
           </Link>
         </div>
 
-        {/* HoneyDew Papaya Product */}
-        <div className="product-item">
-          <Link to="/honeydew-papaya">
-            <img src={honeydewPapayaImage} alt="HoneyDew Papaya Live Rosin" className="product-image" />
-            <div className="product-hover">
-              <p className="product-name">HoneyDew Papaya Live Rosin</p>
-              <p className="product-price">💲50.00</p>
-            </div>
-          </Link>
+        {/* HoneyDew Papaya Product (Now unclickable and Sold Out) */}
+        <div className="product-item sold-out">
+          <img src={honeydewPapayaImage} alt="HoneyDew Papaya Live Rosin" className="product-image" />
+          <div className="product-hover">
+            <p className="product-name">HoneyDew Papaya Live Rosin</p>
+            <p className="product-price">Sold Out</p>
+          </div>
         </div>
 
         {/* BathSalts Product */}
