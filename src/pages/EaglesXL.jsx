@@ -27,7 +27,7 @@ const publicKeyEmail = "BFAA9yJvj1yAllF9o";
 const connection = new Connection("https://api.devnet.solana.com");
 
 const EaglesXLJoystickCropalStick = () => {
-  const { publicKey, sendTransaction, connected } = useWallet();
+  const { publicKey, sendTransaction } = useWallet();
   const [claimPrice, setClaimPrice] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -55,10 +55,24 @@ const EaglesXLJoystickCropalStick = () => {
   // Compute the token amount for the sale
   const totalClaimAmount = claimPrice ? (saleUSD / claimPrice).toFixed(6) : "N/A";
 
-  // Construct the Phantom Universal Link URL
+  // Construct a Phantom Universal Link URL for QR code display (for reference)
   const phantomUrl = `https://phantom.app/ul?app=YourAppName&recipient=${recipientWallet}&mint=${CLAIM_TOKEN_ADDRESS}&amount=${totalClaimAmount}&label=Eagles%20XL%20Joystick%20Cropal%20Stick&message=Purchase%20of%20Eagles%20XL%20Joystick%20Cropal%20Stick`;
 
-  // Handle wallet reconnection (force a disconnect then reconnect)
+  // Handle wallet connection using the injected provider
+  const handleConnectWallet = useCallback(async () => {
+    if (window.solana && window.solana.isPhantom) {
+      try {
+        await window.solana.connect();
+        console.log("Wallet connected:", window.solana.publicKey.toString());
+      } catch (err) {
+        console.error("Error connecting wallet:", err);
+      }
+    } else {
+      alert("Phantom wallet not found! Please install Phantom.");
+    }
+  }, []);
+
+  // Force a reconnect by disconnecting then reconnecting the wallet
   const handleReconnectWallet = useCallback(async () => {
     if (window.solana && window.solana.isPhantom) {
       try {
@@ -73,6 +87,32 @@ const EaglesXLJoystickCropalStick = () => {
       alert("Phantom wallet not found!");
     }
   }, []);
+
+  // Handle Buy Now: use the wallet adapter to create a transaction
+  const handleBuyNow = useCallback(async () => {
+    if (!publicKey) {
+      alert("Please connect your Phantom wallet first!");
+      return;
+    }
+    try {
+      // For demonstration, create a simple transfer transaction (adjust lamports as needed)
+      const transaction = new Transaction().add(
+        SystemProgram.transfer({
+          fromPubkey: publicKey,
+          toPubkey: new PublicKey(recipientWallet),
+          lamports: 1000, // Adjust this value to reflect the purchase amount
+        })
+      );
+      transaction.feePayer = publicKey;
+      const { blockhash } = await connection.getRecentBlockhash();
+      transaction.recentBlockhash = blockhash;
+      const signature = await sendTransaction(transaction, connection);
+      alert("Transaction submitted! Signature: " + signature);
+    } catch (err) {
+      console.error("Transaction failed", err);
+      alert("Transaction failed: " + err.message);
+    }
+  }, [publicKey, sendTransaction, connection]);
 
   // Handle sending order confirmation emails (unchanged)
   const handleSendConfirmation = () => {
@@ -172,22 +212,22 @@ const EaglesXLJoystickCropalStick = () => {
   
         {/* Buy Now Button */}
         <div style={{ margin: "1rem 0" }}>
-          {phantomUrl && (
-            <a
-              href={phantomUrl}
-              className="buy-button"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Buy Now
-            </a>
-          )}
+          <button onClick={handleBuyNow} className="buy-button">
+            Buy Now
+          </button>
         </div>
   
         {/* Reconnect Wallet Button */}
         <div style={{ margin: "1rem 0" }}>
           <button onClick={handleReconnectWallet} className="buy-button">
             Reconnect Wallet
+          </button>
+        </div>
+  
+        {/* Connect Wallet Button */}
+        <div style={{ margin: "1rem 0" }}>
+          <button onClick={handleConnectWallet} className="buy-button">
+            Connect Wallet
           </button>
         </div>
       </div>
@@ -208,81 +248,37 @@ const EaglesXLJoystickCropalStick = () => {
         <div className="order-form">
           <div className="order-form-field">
             <label>Full Name (required)</label>
-            <input
-              type="text"
-              name="fullName"
-              value=""
-              onChange={() => {}}
-            />
+            <input type="text" name="fullName" value="" onChange={() => {}} />
           </div>
           <div className="order-form-field">
             <label>Email (required)</label>
-            <input
-              type="email"
-              name="email"
-              value=""
-              onChange={() => {}}
-            />
+            <input type="email" name="email" value="" onChange={() => {}} />
           </div>
           <div className="order-form-field">
             <label>Street Address (Line 1)</label>
-            <input
-              type="text"
-              name="address1"
-              value=""
-              onChange={() => {}}
-            />
+            <input type="text" name="address1" value="" onChange={() => {}} />
           </div>
           <div className="order-form-field">
             <label>Address Line 2 (Apt, Suite, etc.)</label>
-            <input
-              type="text"
-              name="address2"
-              value=""
-              onChange={() => {}}
-            />
+            <input type="text" name="address2" value="" onChange={() => {}} />
           </div>
           <div className="order-form-field">
             <label>City</label>
-            <input
-              type="text"
-              name="city"
-              value=""
-              onChange={() => {}}
-            />
+            <input type="text" name="city" value="" onChange={() => {}} />
           </div>
           <div className="order-form-field">
             <label>State/Province</label>
-            <input
-              type="text"
-              name="stateProvince"
-              value=""
-              onChange={() => {}}
-            />
+            <input type="text" name="stateProvince" value="" onChange={() => {}} />
           </div>
           <div className="order-form-field">
             <label>Postal/ZIP Code</label>
-            <input
-              type="text"
-              name="postalCode"
-              value=""
-              onChange={() => {}}
-            />
+            <input type="text" name="postalCode" value="" onChange={() => {}} />
           </div>
           <div className="order-form-field">
             <label>Country</label>
-            <input
-              type="text"
-              name="country"
-              value=""
-              onChange={() => {}}
-            />
+            <input type="text" name="country" value="" onChange={() => {}} />
           </div>
-          <button
-            className="send-confirmation-btn"
-            onClick={handleSendConfirmation}
-            disabled={emailSent}
-          >
+          <button className="send-confirmation-btn" onClick={handleSendConfirmation} disabled={emailSent}>
             {emailSent ? "Confirmation Sent" : "Send Order Confirmation"}
           </button>
         </div>
@@ -292,12 +288,7 @@ const EaglesXLJoystickCropalStick = () => {
       <div style={{ textAlign: "center", marginTop: "1.5rem" }}>
         <p>
           If having trouble or need help, join&nbsp;
-          <a
-            href="https://t.me/reclaimtoken"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ color: "#4a4aff", textDecoration: "underline" }}
-          >
+          <a href="https://t.me/reclaimtoken" target="_blank" rel="noopener noreferrer" style={{ color: "#4a4aff", textDecoration: "underline" }}>
             t.me/reclaimtoken
           </a>.
         </p>
