@@ -31,7 +31,7 @@ const CLAIM_TOKEN_MINT = new PublicKey("EkuBwtKVU1x5N2z1VESqBTZFnsQuWuxyQt9LDGqk
 const PRODUCT_PRICE_USD = 85; // Claim price in USD
 const RETAIL_PRICE_USD = 115; // Original retail for display
 
-// ** EmailJS credentials and templates
+// EmailJS credentials and templates
 const serviceID = "service_c4kj8it";
 const sellerTemplateID = "cooper_au2yp3c";
 const buyerTemplateID = "template_3mus039";
@@ -40,6 +40,7 @@ const publicKeyEmail = "BFAA9yJvj1yAllF9o";
 const JoystickPurchase = () => {
   const { publicKey } = useWallet();
 
+  // For fetched claim price, shipping details, etc.
   const [claimPrice, setClaimPrice] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -57,7 +58,7 @@ const JoystickPurchase = () => {
     country: "",
   });
 
-  // ** Fetch $CLAIM price once
+  // Fetch $CLAIM price once
   useEffect(() => {
     const fetchPrice = async () => {
       try {
@@ -76,21 +77,19 @@ const JoystickPurchase = () => {
     fetchPrice();
   }, []);
 
-  // ** Compute how much $CLAIM is needed
+  // Calculate how much $CLAIM is needed
   const CLAIM_AMOUNT = claimPrice && claimPrice > 0 ? (PRODUCT_PRICE_USD / claimPrice).toFixed(6) : null;
   const isReadyToBuy = CLAIM_AMOUNT !== null && !isNaN(CLAIM_AMOUNT) && CLAIM_AMOUNT > 0;
 
-  // ** EXACT BUY LOGIC with forced shipping check + email after success
-  const handleBuyNow = useCallback(async () => {
-    // 1) Make sure shipping details are filled
-    const { fullName, email, address1, address2, city, stateProvince, postalCode, country } = orderDetails;
-    if (!fullName || !email || !address1 || !city || !stateProvince || !postalCode || !country) {
-      alert("Please fill out all required shipping details first!");
-      return;
-    }
+  // Optional: Build a phantom QR link
+  const phantomUrl = isReadyToBuy
+    ? `https://phantom.app/ul?app=CoopersGlass&recipient=${RECIPIENT_WALLET}&mint=${CLAIM_TOKEN_MINT}&amount=${CLAIM_AMOUNT}&label=Eagles%20XL%20Joystick&message=Purchase%20of%20Eagles%20XL%20Joystick`
+    : "";
 
+  // EXACT BUY FUNCTION SNIPPET
+  const handleBuyNow = useCallback(async () => {
     try {
-      // 2) Ensure wallet is connected
+      // Step 1: Ensure wallet is connected
       const ensureWalletConnected = async () => {
         if (!window.solana || !window.solana.isPhantom) {
           alert("Please install Phantom Wallet.");
@@ -115,7 +114,7 @@ const JoystickPurchase = () => {
       }
       console.log("Blockhash fetched:", latestBlockhash.blockhash);
 
-      // Associated token accounts
+      // Get associated token accounts
       const senderTokenAccount = await getAssociatedTokenAddress(CLAIM_TOKEN_MINT, walletAddress);
       const receiverTokenAccount = await getAssociatedTokenAddress(CLAIM_TOKEN_MINT, RECIPIENT_WALLET);
 
@@ -123,11 +122,11 @@ const JoystickPurchase = () => {
       try {
         await getAccount(connection, senderTokenAccount);
       } catch (err) {
-        alert("You do not have a $CLAIM token account. Please receive some $CLAIM first.");
+        alert("You do not have a $CLAIM token account. Receive some $CLAIM first.");
         return;
       }
 
-      // If recipient’s token account missing, create it
+      // Check if recipient's token account is missing
       let recipientAccountCreated = false;
       try {
         await getAccount(connection, receiverTokenAccount);
@@ -155,7 +154,7 @@ const JoystickPurchase = () => {
       // Convert $CLAIM to lamports
       const claimAmountInLamports = BigInt(Number(CLAIM_AMOUNT) * 10 ** 6);
 
-      // If ATA was created, fetch fresh blockhash
+      // If an ATA was created, get a new blockhash
       if (recipientAccountCreated) {
         console.log("Fetching fresh blockhash for token transfer...");
         const newBlockhash = await connection.getLatestBlockhash("finalized");
@@ -182,50 +181,23 @@ const JoystickPurchase = () => {
 
       alert(`Payment Successful! Sent ${CLAIM_AMOUNT} $CLAIM.\nTransaction ID: ${signature}`);
       console.log("Transaction confirmed:", signature);
-
-      // 3) Immediately send emails with shipping info after successful payment
-      const { fullName, email, address1, address2, city, stateProvince, postalCode, country } = orderDetails;
-      const shippingAddress = `${address1}${address2 ? ", " + address2 : ""}, ${city}, ${stateProvince}, ${postalCode}, ${country}`;
-
-      // Build EmailJS template params
-      const templateParams = {
-        from_name: fullName,
-        email,
-        shippingAddress,
-        product: "Eagles XL Joystick Cropal Stick",
-        totalUSD: PRODUCT_PRICE_USD,
-        totalCLAIM: CLAIM_AMOUNT,
-      };
-
-      // Send to seller, then buyer
-      emailjs
-        .send(
-          serviceID,
-          sellerTemplateID,
-          { ...templateParams, to_name: "Seller", seller_email: "moviezzy@hotmail.com" },
-          publicKeyEmail
-        )
-        .then(() =>
-          emailjs.send(
-            serviceID,
-            buyerTemplateID,
-            { ...templateParams, to_name: fullName },
-            publicKeyEmail
-          )
-        )
-        .then(() => {
-          alert("Order confirmation sent to both seller and buyer!");
-          setEmailSent(true);
-        })
-        .catch((err) => {
-          console.error("FAILED to send email confirmations...", err);
-          alert("Failed to send order confirmation.");
-        });
     } catch (err) {
-      console.error("Transaction or email logic failed:", err);
-      alert("Transaction or email logic failed: " + err.message);
+      console.error("Transaction failed:", err);
+      alert("Transaction failed: " + err.message);
     }
-  }, [CLAIM_AMOUNT, orderDetails]);
+  }, [CLAIM_AMOUNT]);
+
+  // Example email confirmation separate
+  const handleSendConfirmation = () => {
+    const { fullName, email, address1, address2, city, stateProvince, postalCode, country } = orderDetails;
+    if (!fullName || !email || !address1 || !city || !stateProvince || !postalCode || !country) {
+      alert("Please fill out all required shipping details.");
+      return;
+    }
+    // Add your EmailJS logic or shipping confirm logic
+    alert("Order confirmation sent! [Integrate your email logic here]");
+    setEmailSent(true);
+  };
 
   return (
     <div className="product-list-container">
@@ -247,101 +219,69 @@ const JoystickPurchase = () => {
         <img src={productImage} alt="Eagles XL Joystick Cropal Stick" className="product-image" />
         <h2>Eagles XL Joystick Cropal Stick</h2>
         <p><del>Retail: ${RETAIL_PRICE_USD}</del></p>
-        <p>
-          {loading
-            ? "Loading $CLAIM price..."
-            : claimPrice
-            ? `${PRODUCT_PRICE_USD} USD ≈ ${CLAIM_AMOUNT} $CLAIM`
-            : "N/A"}
-        </p>
+        <p>{loading ? "Loading $CLAIM price..." : claimPrice ? `Claim Price: ≈ ${CLAIM_AMOUNT} $CLAIM` : "N/A"}</p>
 
-        {/* 2-column Shipping Form */}
-        <div
-          className="order-form"
-          style={{
-            margin: "1rem 0",
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            columnGap: "1rem",
-            rowGap: "1rem",
-          }}
-        >
-          {/* Column 1 */}
-          <div>
-            <label>Full Name (required)</label>
-            <input
-              type="text"
-              placeholder="John Doe"
-              onChange={(e) => setOrderDetails({ ...orderDetails, fullName: e.target.value })}
-            />
-          </div>
-          <div>
-            <label>Email (required)</label>
-            <input
-              type="email"
-              placeholder="you@example.com"
-              onChange={(e) => setOrderDetails({ ...orderDetails, email: e.target.value })}
-            />
-          </div>
+        {/* Shipping Form */}
+        <div className="order-form" style={{ margin: "1rem 0" }}>
+          <label>Full Name (required)</label>
+          <input
+            type="text"
+            placeholder="John Doe"
+            onChange={(e) => setOrderDetails({ ...orderDetails, fullName: e.target.value })}
+          />
 
-          <div>
-            <label>Street Address (Line 1)</label>
-            <input
-              type="text"
-              placeholder="123 Main St"
-              onChange={(e) => setOrderDetails({ ...orderDetails, address1: e.target.value })}
-            />
-          </div>
-          <div>
-            <label>Address Line 2 (Apt, Suite, etc.)</label>
-            <input
-              type="text"
-              placeholder="Apt #"
-              onChange={(e) => setOrderDetails({ ...orderDetails, address2: e.target.value })}
-            />
-          </div>
+          <label>Email (required)</label>
+          <input
+            type="email"
+            placeholder="you@example.com"
+            onChange={(e) => setOrderDetails({ ...orderDetails, email: e.target.value })}
+          />
 
-          <div>
-            <label>City</label>
-            <input
-              type="text"
-              placeholder="City"
-              onChange={(e) => setOrderDetails({ ...orderDetails, city: e.target.value })}
-            />
-          </div>
-          <div>
-            <label>State/Province</label>
-            <input
-              type="text"
-              placeholder="State/Province"
-              onChange={(e) => setOrderDetails({ ...orderDetails, stateProvince: e.target.value })}
-            />
-          </div>
+          <label>Street Address (Line 1)</label>
+          <input
+            type="text"
+            placeholder="123 Main St"
+            onChange={(e) => setOrderDetails({ ...orderDetails, address1: e.target.value })}
+          />
 
-          <div>
-            <label>Postal/ZIP Code</label>
-            <input
-              type="text"
-              placeholder="12345"
-              onChange={(e) => setOrderDetails({ ...orderDetails, postalCode: e.target.value })}
-            />
-          </div>
-          <div>
-            <label>Country</label>
-            <input
-              type="text"
-              placeholder="USA"
-              onChange={(e) => setOrderDetails({ ...orderDetails, country: e.target.value })}
-            />
-          </div>
+          <label>Address Line 2 (Apt, Suite, etc.)</label>
+          <input
+            type="text"
+            placeholder="Apt #"
+            onChange={(e) => setOrderDetails({ ...orderDetails, address2: e.target.value })}
+          />
+
+          <label>City</label>
+          <input
+            type="text"
+            placeholder="City"
+            onChange={(e) => setOrderDetails({ ...orderDetails, city: e.target.value })}
+          />
+
+          <label>State/Province</label>
+          <input
+            type="text"
+            placeholder="State/Province"
+            onChange={(e) => setOrderDetails({ ...orderDetails, stateProvince: e.target.value })}
+          />
+
+          <label>Postal/ZIP Code</label>
+          <input
+            type="text"
+            placeholder="12345"
+            onChange={(e) => setOrderDetails({ ...orderDetails, postalCode: e.target.value })}
+          />
+
+          <label>Country</label>
+          <input
+            type="text"
+            placeholder="USA"
+            onChange={(e) => setOrderDetails({ ...orderDetails, country: e.target.value })}
+          />
         </div>
 
-        {/* Buy Now Button (requires shipping + correct price) */}
-        <button
-          onClick={handleBuyNow}
-          className="buy-button"
-          disabled={!isReadyToBuy}
-        >
+        {/* Buy Button */}
+        <button onClick={handleBuyNow} className="buy-button" disabled={!isReadyToBuy}>
           {isReadyToBuy ? "Buy Now" : "Loading Price..."}
         </button>
       </div>
@@ -349,10 +289,22 @@ const JoystickPurchase = () => {
       <div style={{ textAlign: "center", marginTop: "1rem" }}>
         <h3>How to Complete Your Purchase</h3>
         <p style={{ lineHeight: "1.6" }}>
-          1) Fill out the required shipping details above.<br />
-          2) Click <strong>Buy Now</strong> to pay with Phantom.<br />
-          3) After a successful payment, confirmation emails will be sent automatically.<br />
+          1) After filling out shipping details, click <strong>Buy Now</strong> to pay with Phantom.
+          <br />
+          2) Approve the transaction in your Phantom Wallet.
+          <br />
+          3) Once payment is confirmed, click <strong>Send Order Confirmation</strong> to notify the seller.
         </p>
+      </div>
+
+      <div className="order-instructions card" style={{ textAlign: "center" }}>
+        <button
+          className="send-confirmation-btn"
+          onClick={handleSendConfirmation}
+          disabled={emailSent}
+        >
+          {emailSent ? "Confirmation Sent" : "Send Order Confirmation"}
+        </button>
       </div>
 
       {/* Telegram Support Link */}

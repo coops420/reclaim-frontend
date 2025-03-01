@@ -1,0 +1,186 @@
+import React, { useState, useEffect, useCallback } from "react";
+import { Link } from "react-router-dom";
+import QRCode from "react-qr-code";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { Connection, Transaction, PublicKey } from "@solana/web3.js";
+import {
+  getAssociatedTokenAddress,
+  createTransferInstruction,
+  getAccount,
+  createAssociatedTokenAccountInstruction,
+  TOKEN_PROGRAM_ID,
+} from "@solana/spl-token";
+import "./ProductList.css";
+import vendorImage from "../assets/coopersglass.jpg";
+import productImage from "../assets/eaglesXL.jpg";
+import emailjs from "emailjs-com";
+
+// ** ✅ QUICKNODE RPC URL **
+const QUICKNODE_RPC_URL =
+  "https://blissful-responsive-general.solana-mainnet.quiknode.pro/d5b8fc8baeac551f6fcad8f278dcd3364f5d3aff/";
+const connection = new Connection(QUICKNODE_RPC_URL, "confirmed");
+
+// ** RECIPIENT WALLET (SELLER) **
+const RECIPIENT_WALLET = new PublicKey("AfEanUHHtW1Eqos85FNUJCm7WSKr5PyeqneBt1PURRpW");
+
+// ** CLAIM Token Mint Address **
+const CLAIM_TOKEN_MINT = new PublicKey("EkuBwtKVU1x5N2z1VESqBTZFnsQuWuxyQt9LDGqkJsk4");
+
+// ** PRICING CONFIG (Sending $CLAIM) **
+const CLAIM_AMOUNT = 10; // **Send 10 $CLAIM tokens**
+
+const EaglesXLJoystickCropalStick = () => {
+  const { publicKey } = useWallet();
+
+  // ** SolanaPay QR Code URL (Updated for $CLAIM Token) **
+  const phantomUrl = `https://phantom.app/ul?app=CoopersGlass&recipient=${RECIPIENT_WALLET.toString()}&mint=${CLAIM_TOKEN_MINT}&amount=${CLAIM_AMOUNT}&label=Eagles%20XL%20Joystick%20Cropal%20Stick&message=Purchase%20of%20Eagles%20XL%20Joystick%20Cropal%20Stick`;
+
+  // ** Ensure Wallet is Connected Before Purchase **
+  const ensureWalletConnected = async () => {
+    if (!window.solana || !window.solana.isPhantom) {
+      alert("Please install Phantom Wallet.");
+      return null;
+    }
+    try {
+      if (!publicKey) {
+        console.log("Reconnecting Phantom Wallet...");
+        const wallet = await window.solana.connect();
+        return wallet.publicKey;
+      }
+      return publicKey;
+    } catch (err) {
+      console.error("Wallet connection failed", err);
+      alert("Failed to connect Phantom Wallet.");
+      return null;
+    }
+  };
+
+  // ** ✅ Use `signAndSendTransaction()` for Manual Approval & Send $CLAIM Instead of SOL **
+  const handleBuyNow = useCallback(async () => {
+    try {
+      const walletAddress = await ensureWalletConnected();
+      if (!walletAddress) return;
+
+      console.log("Fetching latest blockhash...");
+      const latestBlockhash = await connection.getLatestBlockhash("finalized");
+
+      if (!latestBlockhash.blockhash) {
+        alert("Failed to get a valid blockhash. Try again.");
+        return;
+      }
+      console.log("Blockhash fetched:", latestBlockhash.blockhash);
+
+      // ** Get Associated Token Accounts **
+      const senderTokenAccount = await getAssociatedTokenAddress(CLAIM_TOKEN_MINT, walletAddress);
+      const receiverTokenAccount = await getAssociatedTokenAddress(CLAIM_TOKEN_MINT, RECIPIENT_WALLET);
+
+      // ** Ensure Buyer Has a Token Account for $CLAIM **
+      try {
+        await getAccount(connection, senderTokenAccount);
+      } catch (err) {
+        alert("You do not have a $CLAIM token account. Receive some $CLAIM first.");
+        return;
+      }
+
+      // ** Ensure Recipient Has a Token Account for $CLAIM (Create if Missing) **
+      let recipientAccountCreated = false;
+      try {
+        await getAccount(connection, receiverTokenAccount);
+      } catch (err) {
+        console.log("Creating recipient's associated token account...");
+
+        const createAccountTransaction = new Transaction().add(
+          createAssociatedTokenAccountInstruction(
+            walletAddress,
+            receiverTokenAccount,
+            RECIPIENT_WALLET,
+            CLAIM_TOKEN_MINT
+          )
+        );
+
+        // ✅ **Explicitly Set Blockhash Before Signing**
+        createAccountTransaction.recentBlockhash = latestBlockhash.blockhash;
+        createAccountTransaction.feePayer = walletAddress;
+
+        console.log("Requesting Phantom confirmation to create recipient token account...");
+        const { signature } = await window.solana.signAndSendTransaction(createAccountTransaction);
+        console.log("Recipient's token account created:", signature);
+        recipientAccountCreated = true;
+      }
+
+      // ** Convert $CLAIM to Smallest Token Unit (Lamports) **
+      const claimAmountInLamports = BigInt(CLAIM_AMOUNT * 10 ** 6);
+
+      // ** Fetch a Fresh Blockhash for the Transfer Transaction (If Needed) **
+      if (recipientAccountCreated) {
+        console.log("Fetching fresh blockhash for token transfer...");
+        const newBlockhash = await connection.getLatestBlockhash("finalized");
+        latestBlockhash.blockhash = newBlockhash.blockhash;
+      }
+
+      // ** Create SPL Token Transfer Transaction **
+      console.log(`Requesting Phantom Wallet confirmation to send ${CLAIM_AMOUNT} $CLAIM...`);
+      const transaction = new Transaction().add(
+        createTransferInstruction(
+          senderTokenAccount,
+          receiverTokenAccount,
+          walletAddress,
+          claimAmountInLamports, // Amount in smallest unit
+          [], // No additional signers
+          TOKEN_PROGRAM_ID
+        )
+      );
+
+      // ✅ **Explicitly Set Blockhash Before Signing**
+      transaction.recentBlockhash = latestBlockhash.blockhash;
+      transaction.feePayer = walletAddress;
+
+      // ✅ **Use `signAndSendTransaction()` Instead of `sendTransaction()`**
+      const { signature } = await window.solana.signAndSendTransaction(transaction);
+
+      alert(`Payment Successful! Sent ${CLAIM_AMOUNT} $CLAIM.\nTransaction ID: ${signature}`);
+      console.log("Transaction confirmed:", signature);
+    } catch (err) {
+      console.error("Transaction failed:", err);
+      alert("Transaction failed: " + err.message);
+    }
+  }, []);
+
+  return (
+    <div className="product-list-container">
+      <nav className="nav-links">
+        <Link to="/" className="nav-button">Home</Link>
+        <Link to="/vendors" className="nav-button">Vendors</Link>
+        <Link to="/about" className="nav-button">About</Link>
+        <Link to="/giveaways" className="nav-button">Airdrops</Link>
+      </nav>
+
+      <div className="vendor-header">
+        <img src={vendorImage} alt="Coopers Glass" className="vendor-image" />
+      </div>
+
+      <div className="product-details card" style={{ textAlign: "center" }}>
+        <img src={productImage} alt="Eagles XL Joystick Cropal Stick" className="product-image" />
+        <h2>Eagles XL Joystick Cropal Stick</h2>
+        <p><del>Retail: $115.00</del></p>
+        <p>Claim: {CLAIM_AMOUNT} $CLAIM</p>
+
+        {phantomUrl && <QRCode value={phantomUrl} size={180} />}
+
+        <button onClick={handleBuyNow} className="buy-button">Buy Now</button>
+      </div>
+
+      <div style={{ textAlign: "center", marginTop: "1rem" }}>
+        <h3>How to Purchase</h3>
+        <p>
+          1) Make sure you have claim<br />
+          2) Fill out the form <br />
+          3) Click Buy <br />
+        </p>
+      </div>
+    </div>
+  );
+};
+
+export default EaglesXLJoystickCropalStick;
+

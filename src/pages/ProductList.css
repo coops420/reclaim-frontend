@@ -26,7 +26,7 @@
   background: #555;
 }
 
-/* 🔹 Vendor Image - Fixed Size */
+/* 🔹 Vendor Image - Fixed Size (Desktop) */
 .vendor-header {
   display: flex;
   justify-content: center;
@@ -117,7 +117,7 @@
   margin-top: 20px;
 }
 
-/* On the product details page, show the full image at the same 180px size */
+/* Desktop Product Image in Details */
 .product-details img {
   width: 180px !important;
   height: 180px !important;
@@ -140,7 +140,7 @@
   z-index: 1000;
 }
 
-/* 🔹 Buy Button */
+/* 🔹 Buy Button (Desktop) */
 .buy-button {
   background: #007bff;
   color: white;
@@ -157,8 +157,52 @@
   background: #0056b3;
 }
 
-/* 🔹 Adjust image zoom on hover for grid items (optional) */
+/* 🔹 Image Zoom on Hover (Optional) */
 .product-item:hover .product-image {
   transform: scale(1.05);
 }
+
+/* 🔹 Responsive Adjustments: 'Shrink Everything' on Mobile */
+@media (max-width: 600px) {
+  /* Make container padding smaller */
+  .product-list-container {
+    padding: 10px;
+  }
+
+  /* Stack nav buttons if needed */
+  .nav-links {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* Single column for the order form on small screens */
+  .order-form {
+    grid-template-columns: 1fr !important;
+    row-gap: 1rem;
+  }
+
+  /* Shrink images from 180px -> 120px */
+  .vendor-image,
+  .product-details img,
+  .product-item,
+  .product-image {
+    width: 120px !important;
+    height: 120px !important;
+  }
+
+  /* Shrink the buy button, text size, and padding for small screens */
+  .buy-button {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+
+  /* Possibly shrink font sizes more if wanted */
+  .product-name,
+  .product-price,
+  .product-retail-price,
+  .product-sale-price {
+    font-size: 12px !important;
+  }
+}
+
 
