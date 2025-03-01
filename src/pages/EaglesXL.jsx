@@ -24,7 +24,7 @@ const buyerTemplateID = "template_3mus039";
 const publicKeyEmail = "BFAA9yJvj1yAllF9o";
 
 // Create a connection to Devnet
-const connection = new Connection("https://api.devnet.solana.com");
+const connection = new Connection("https://api.devnet.solana.com", "confirmed");
 
 const EaglesXLJoystickCropalStick = () => {
   const { publicKey, sendTransaction } = useWallet();
@@ -52,31 +52,19 @@ const EaglesXLJoystickCropalStick = () => {
     fetchPrice();
   }, []);
 
-  // Compute the token amount for the sale
+  // Compute the token amount for the sale (for display in QR code)
   const totalClaimAmount = claimPrice ? (saleUSD / claimPrice).toFixed(6) : "N/A";
 
-  // Construct a Phantom Universal Link URL for QR code display (for reference)
+  // Construct the Phantom Universal Link URL for QR code display
   const phantomUrl = `https://phantom.app/ul?app=YourAppName&recipient=${recipientWallet}&mint=${CLAIM_TOKEN_ADDRESS}&amount=${totalClaimAmount}&label=Eagles%20XL%20Joystick%20Cropal%20Stick&message=Purchase%20of%20Eagles%20XL%20Joystick%20Cropal%20Stick`;
 
-  // Handle wallet connection using the injected provider
-  const handleConnectWallet = useCallback(async () => {
-    if (window.solana && window.solana.isPhantom) {
-      try {
-        await window.solana.connect();
-        console.log("Wallet connected:", window.solana.publicKey.toString());
-      } catch (err) {
-        console.error("Error connecting wallet:", err);
-      }
-    } else {
-      alert("Phantom wallet not found! Please install Phantom.");
-    }
-  }, []);
-
-  // Force a reconnect by disconnecting then reconnecting the wallet
+  // Force a reconnect: disconnect, clear local storage, then reconnect Phantom
   const handleReconnectWallet = useCallback(async () => {
     if (window.solana && window.solana.isPhantom) {
       try {
         await window.solana.disconnect();
+        // Clear any cached connection info (if any)
+        window.localStorage.clear();
         await window.solana.connect();
         alert("Wallet reconnected successfully!");
       } catch (err) {
@@ -88,31 +76,34 @@ const EaglesXLJoystickCropalStick = () => {
     }
   }, []);
 
-  // Handle Buy Now: use the wallet adapter to create a transaction
+  // Handle Buy Now: create and send a transaction using the injected Phantom provider
   const handleBuyNow = useCallback(async () => {
     if (!publicKey) {
       alert("Please connect your Phantom wallet first!");
       return;
     }
     try {
-      // For demonstration, create a simple transfer transaction (adjust lamports as needed)
+      // Create a simple transfer transaction (adjust lamports as needed)
       const transaction = new Transaction().add(
         SystemProgram.transfer({
           fromPubkey: publicKey,
           toPubkey: new PublicKey(recipientWallet),
-          lamports: 1000, // Adjust this value to reflect the purchase amount
+          lamports: 1000, // Adjust this value to reflect the purchase amount in lamports
         })
       );
       transaction.feePayer = publicKey;
       const { blockhash } = await connection.getRecentBlockhash();
       transaction.recentBlockhash = blockhash;
-      const signature = await sendTransaction(transaction, connection);
+      
+      // Use the injected provider to sign the transaction
+      const signedTransaction = await window.solana.signTransaction(transaction);
+      const signature = await connection.sendRawTransaction(signedTransaction.serialize());
       alert("Transaction submitted! Signature: " + signature);
     } catch (err) {
       console.error("Transaction failed", err);
       alert("Transaction failed: " + err.message);
     }
-  }, [publicKey, sendTransaction, connection]);
+  }, [publicKey, connection]);
 
   // Handle sending order confirmation emails (unchanged)
   const handleSendConfirmation = () => {
@@ -121,7 +112,7 @@ const EaglesXLJoystickCropalStick = () => {
       acc[input.name] = input.value;
       return acc;
     }, {});
-  
+
     if (
       !orderData.fullName ||
       !orderData.email ||
@@ -134,14 +125,14 @@ const EaglesXLJoystickCropalStick = () => {
       alert("Please fill out all required shipping details.");
       return;
     }
-  
+
     const shippingAddress = `${orderData.address1}${
       orderData.address2 ? ", " + orderData.address2 : ""
     }, ${orderData.city}, ${orderData.stateProvince}, ${orderData.postalCode}, ${orderData.country}`;
-  
+
     const totalUSD = saleUSD;
     const totalCLAIM = claimPrice ? (saleUSD / claimPrice).toFixed(6) : "N/A";
-  
+
     const templateParams = {
       from_name: orderData.fullName,
       email: orderData.email,
@@ -151,7 +142,7 @@ const EaglesXLJoystickCropalStick = () => {
       totalCLAIM,
       solanaPayURL: phantomUrl,
     };
-  
+
     emailjs
       .send(
         serviceID,
@@ -187,12 +178,12 @@ const EaglesXLJoystickCropalStick = () => {
         <Link to="/about" className="nav-button">About Us</Link>
         <Link to="/giveaways" className="nav-button">AirDrops & Giveaways</Link>
       </nav>
-  
+
       {/* Vendor Header */}
       <div className="vendor-header">
         <img src={vendorImage} alt="Coopers Glass" className="vendor-image" />
       </div>
-  
+
       {/* Product Details Card */}
       <div className="product-details card" style={{ textAlign: "center" }}>
         <img src={productImage} alt="Eagles XL Joystick Cropal Stick" className="product-image" />
@@ -206,32 +197,25 @@ const EaglesXLJoystickCropalStick = () => {
             ? `≈ ${totalClaimAmount} $CLAIM`
             : "N/A"}
         </p>
-  
+
         {/* QR Code Section */}
         {phantomUrl && <QRCode value={phantomUrl} size={180} />}
-  
+
         {/* Buy Now Button */}
         <div style={{ margin: "1rem 0" }}>
           <button onClick={handleBuyNow} className="buy-button">
             Buy Now
           </button>
         </div>
-  
-        {/* Reconnect Wallet Button */}
+
+        {/* Reconnect Wallet Button (forces hard refresh and reconnection) */}
         <div style={{ margin: "1rem 0" }}>
           <button onClick={handleReconnectWallet} className="buy-button">
             Reconnect Wallet
           </button>
         </div>
-  
-        {/* Connect Wallet Button */}
-        <div style={{ margin: "1rem 0" }}>
-          <button onClick={handleConnectWallet} className="buy-button">
-            Connect Wallet
-          </button>
-        </div>
       </div>
-  
+
       {/* Purchase Instructions */}
       <div style={{ textAlign: "center", marginTop: "1rem" }}>
         <h3>How to Complete Your Purchase</h3>
@@ -242,7 +226,7 @@ const EaglesXLJoystickCropalStick = () => {
           4) Click <strong>Send Order Confirmation</strong> to notify the seller.
         </p>
       </div>
-  
+
       {/* Order Form */}
       <div className="order-instructions card" style={{ textAlign: "center" }}>
         <div className="order-form">
@@ -283,12 +267,17 @@ const EaglesXLJoystickCropalStick = () => {
           </button>
         </div>
       </div>
-  
+
       {/* Telegram Support Link */}
       <div style={{ textAlign: "center", marginTop: "1.5rem" }}>
         <p>
           If having trouble or need help, join&nbsp;
-          <a href="https://t.me/reclaimtoken" target="_blank" rel="noopener noreferrer" style={{ color: "#4a4aff", textDecoration: "underline" }}>
+          <a
+            href="https://t.me/reclaimtoken"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "#4a4aff", textDecoration: "underline" }}
+          >
             t.me/reclaimtoken
           </a>.
         </p>
@@ -298,3 +287,4 @@ const EaglesXLJoystickCropalStick = () => {
 };
 
 export default EaglesXLJoystickCropalStick;
+
