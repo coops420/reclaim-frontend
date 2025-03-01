@@ -75,3 +75,29 @@
   transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
+/* 🔹 Additional Mobile Adjustments (max-width: 600px) */
+@media (max-width: 600px) {
+  /* Slightly smaller text in the page title */
+  .page-title {
+    font-size: 2rem;
+  }
+
+  /* Shrink vendor items */
+  .vendor-item {
+    width: 140px;
+    height: 220px;
+  }
+
+  /* Adjust the vendor image so it fits the new size better */
+  .vendor-image {
+    width: 120%;
+    height: auto;
+  }
+
+  /* Reduce the vendor-name font-size */
+  .vendor-name {
+    font-size: 14px;
+  }
+}
+
+

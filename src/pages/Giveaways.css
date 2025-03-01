@@ -110,3 +110,45 @@
   color: #ccc;
 }
 
+/* 🔹 Additional Mobile Adjustments (max-width: 600px) */
+@media (max-width: 600px) {
+  /* Smaller container padding, if desired */
+  .giveaways-container {
+    padding: 15px;
+  }
+
+  /* Shrink nav-links gap and possibly stack them */
+  .nav-links {
+    gap: 10px;
+    flex-direction: column;
+  }
+
+  .nav-button {
+    font-size: 0.9rem;
+    padding: 8px 12px;
+  }
+
+  /* Reduce the prize title font size */
+  .giveaway-prize {
+    font-size: 1.8rem;
+  }
+
+  /* Lower bullet text a bit */
+  .giveaway-info {
+    font-size: 1rem;
+  }
+
+  /* Make the countdown container narrower or smaller text */
+  .countdown-container {
+    padding: 15px;
+  }
+  .countdown-title {
+    font-size: 1.4rem;
+  }
+  .countdown-info {
+    font-size: 0.9rem;
+  }
+  .countdown-note {
+    font-size: 0.8rem;
+  }
+}

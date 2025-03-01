@@ -140,3 +140,24 @@
   padding: 5px;
   border-radius: 5px;
 }
+
+/* Additional Mobile Media Query (max-width: 600px) */
+@media (max-width: 600px) {
+  /* Shrink the scrolling text font-size */
+  .scrolling-text {
+    font-size: 16px;
+  }
+
+  /* Shrink the movie title font-size */
+  .movie-title {
+    font-size: 24px;
+  }
+
+  /* Contract block text smaller */
+  .contract {
+    font-size: 14px;
+  }
+
+  /* If you want to reduce overlay or container, do so here */
+  /* E.g., .overlay { background: rgba(0,0,0,0.85); } or about-container if needed */
+}

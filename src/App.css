@@ -144,7 +144,7 @@ p {
     background: rgba(0, 212, 255, 0.4);
 }
 
-/* Responsive Design */
+/* Responsive Design (max-width: 768px) */
 @media (max-width: 768px) {
     .title {
         font-size: 2.5rem;
@@ -166,5 +166,29 @@ p {
 
     .about-section {
         width: 90%;
+    }
+}
+
+/* Additional Shrink for Smaller Mobile (max-width: 600px) */
+@media (max-width: 600px) {
+    /* Slightly reduce title, paragraphs, and nav-button font again */
+    .title {
+        font-size: 2rem;
+    }
+
+    p {
+        font-size: 0.9rem;
+        padding: 10px 16px;
+    }
+
+    .nav-button {
+        font-size: 0.9rem;
+        padding: 10px 16px;
+    }
+
+    /* Make the .about-section narrower & smaller text */
+    .about-section {
+        font-size: 0.95rem;
+        padding: 15px;
     }
 }
