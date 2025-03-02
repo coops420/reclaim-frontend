@@ -27,6 +27,9 @@ import HoneyDewPapaya from "./pages/HoneyDewPapaya";
 import Honey2 from "./pages/Honey2"; // New page from honey2.jsx
 import BathSalts from "./pages/BathSalts";
 import GarlicAmarettoLiveResin from "./pages/garlic"; // New garlic page
+import ProxyRecyclerClear from "./pages/proxrec"; // New proxrec page
+import Dustcrop from "./pages/dustcrop"; // New dustcrop page
+import PivotCropalTop from "./pages/PivotCropalTop"; // New Pivot Cropal Top page
 
 const endpoint = clusterApiUrl("mainnet-beta");
 
@@ -48,8 +51,16 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               <Route path="/honey2" element={<Honey2 />} /> {/* New Honey2 route */}
               <Route path="/bathsalts" element={<BathSalts />} />
               <Route path="/garlic" element={<GarlicAmarettoLiveResin />} /> {/* New Garlic page */}
+              <Route path="/proxrec" element={<ProxyRecyclerClear />} /> {/* Existing Proxy Recycler Clear page */}
+              <Route path="/dustcrop" element={<Dustcrop />} /> {/* New Dustcrop page */}
+              
+              {/* Vendors and their product pages */}
+              <Route path="/vendors/coopersglass/product10" element={<ProxyRecyclerClear />} />
+              <Route path="/vendors/coopersglass/product11" element={<Dustcrop />} /> {/* New Product 11 */}
+              <Route path="/vendors/coopersglass/product12" element={<PivotCropalTop />} /> {/* New Product 12 */}
 
-              {/* Vendors and their product pages as separate routes */}
+              {/* Fallback dynamic vendor route */}
+              <Route path="/vendors/:vendorId" element={<ProductList />} />
               <Route path="/vendors" element={<Vendors />} />
               <Route path="/vendors/coopersglass" element={<CoopersGlass />} />
               <Route path="/vendors/coopersglass/product1" element={<CoopersGlassProduct1 />} />
@@ -61,9 +72,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               <Route path="/vendors/coopersglass/product7" element={<NeonHybrid />} />
               <Route path="/vendors/coopersglass/product8" element={<LVCrushedOpalPuffer />} />
               <Route path="/vendors/coopersglass/product9" element={<EaglesXLJoystickCropalStick />} />
-
-              {/* Fallback dynamic vendor route */}
-              <Route path="/vendors/:vendorId" element={<ProductList />} />
             </Routes>
           </Router>
         </WalletModalProvider>
@@ -71,3 +79,4 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     </ConnectionProvider>
   </React.StrictMode>
 );
+

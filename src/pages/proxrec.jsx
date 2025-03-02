@@ -14,8 +14,8 @@ import { getClaimPrice } from "../components/TokenPrice"; // Fetch live $CLAIM p
 import "./ProductList.css";
 
 import vendorImage from "../assets/coopersglass.jpg";
-// Updated product image: using dustcrop.jpg
-import productImage from "../assets/dustcrop.jpg";
+// Updated product image
+import productImage from "../assets/proxrec.jpg";
 
 import emailjs from "emailjs-com";
 
@@ -31,9 +31,9 @@ const RECIPIENT_WALLET = new PublicKey("AfEanUHHtW1Eqos85FNUJCm7WSKr5PyeqneBt1PU
 const CLAIM_TOKEN_MINT = new PublicKey("EkuBwtKVU1x5N2z1VESqBTZFnsQuWuxyQt9LDGqkJsk4");
 
 // ** PRICING CONFIG **
-// Claim price is $275 USD, Retail price is $375 USD
-const PRODUCT_PRICE_USD = 275;
-const RETAIL_PRICE_USD = 375;
+// Retail price is $550 (displayed as a strike-through) and Claim price is $350
+const PRODUCT_PRICE_USD = 350; 
+const RETAIL_PRICE_USD = 550;
 
 // ** EmailJS credentials and templates **
 const serviceID         = "service_c4kj8it";
@@ -88,6 +88,7 @@ const ProxyRecyclerClear = () => {
 
   // ** EXACT BUY LOGIC with forced shipping check + email after success
   const handleBuyNow = useCallback(async () => {
+    // 1) Make sure shipping details are filled
     const { fullName, email, address1, address2, city, stateProvince, postalCode, country } = orderDetails;
     if (!fullName || !email || !address1 || !city || !stateProvince || !postalCode || !country) {
       alert("Please fill out all required shipping details first!");
@@ -95,6 +96,7 @@ const ProxyRecyclerClear = () => {
     }
 
     try {
+      // 2) Ensure wallet is connected
       const ensureWalletConnected = async () => {
         if (!window.solana || !window.solana.isPhantom) {
           alert("Please install Phantom Wallet.");
@@ -120,9 +122,10 @@ const ProxyRecyclerClear = () => {
       console.log("Blockhash fetched:", latestBlockhash.blockhash);
 
       // Associated token accounts
-      const senderTokenAccount = await getAssociatedTokenAddress(CLAIM_TOKEN_MINT, walletAddress);
+      const senderTokenAccount   = await getAssociatedTokenAddress(CLAIM_TOKEN_MINT, walletAddress);
       const receiverTokenAccount = await getAssociatedTokenAddress(CLAIM_TOKEN_MINT, RECIPIENT_WALLET);
 
+      // Ensure buyer has $CLAIM token account
       try {
         await getAccount(connection, senderTokenAccount);
       } catch (err) {
@@ -130,6 +133,7 @@ const ProxyRecyclerClear = () => {
         return;
       }
 
+      // If recipient’s token account missing, create it
       let recipientAccountCreated = false;
       try {
         await getAccount(connection, receiverTokenAccount);
@@ -144,7 +148,7 @@ const ProxyRecyclerClear = () => {
           )
         );
         createAccountTransaction.recentBlockhash = latestBlockhash.blockhash;
-        createAccountTransaction.feePayer = walletAddress;
+        createAccountTransaction.feePayer        = walletAddress;
 
         console.log("Requesting Phantom confirmation to create recipient token account...");
         const { signature } = await window.solana.signAndSendTransaction(createAccountTransaction);
@@ -152,6 +156,7 @@ const ProxyRecyclerClear = () => {
         recipientAccountCreated = true;
       }
 
+      // Convert $CLAIM to lamports
       const claimAmountInLamports = BigInt(Number(CLAIM_AMOUNT) * 10 ** 6);
       if (recipientAccountCreated) {
         console.log("Fetching fresh blockhash for token transfer...");
@@ -159,6 +164,7 @@ const ProxyRecyclerClear = () => {
         latestBlockhash.blockhash = newBlockhash.blockhash;
       }
 
+      // Create the SPL token transfer transaction
       console.log(`Requesting Phantom Wallet confirmation to send ${CLAIM_AMOUNT} $CLAIM...`);
       const transaction = new Transaction().add(
         createTransferInstruction(
@@ -171,18 +177,19 @@ const ProxyRecyclerClear = () => {
         )
       );
       transaction.recentBlockhash = latestBlockhash.blockhash;
-      transaction.feePayer = walletAddress;
+      transaction.feePayer        = walletAddress;
 
       const { signature } = await window.solana.signAndSendTransaction(transaction);
       alert(`Payment Successful! Sent ${CLAIM_AMOUNT} $CLAIM.\nTransaction ID: ${signature}`);
       console.log("Transaction confirmed:", signature);
 
+      // 3) Immediately send emails with shipping info after successful payment
       const shippingAddress = `${address1}${address2 ? ", " + address2 : ""}, ${city}, ${stateProvince}, ${postalCode}, ${country}`;
       const templateParams = {
         from_name: fullName,
         email,
         shippingAddress,
-        product: "Blue Stardust Crushed Opal Puffer",
+        product: "Proxy Recycler Clear",
         totalUSD: RETAIL_PRICE_USD,
         totalCLAIM: CLAIM_AMOUNT,
       };
@@ -235,10 +242,10 @@ const ProxyRecyclerClear = () => {
       <div className="product-details card" style={{ textAlign: "center" }}>
         <img
           src={productImage}
-          alt="Blue Stardust Crushed Opal Puffer"
+          alt="Proxy Recycler Clear"
           className="product-image"
         />
-        <h2>Blue Stardust Crushed Opal Puffer</h2>
+        <h2>Proxy Recycler Clear</h2>
         <p><del>Retail: ${RETAIL_PRICE_USD}</del></p>
         <p>
           {loading
