@@ -29,8 +29,8 @@ const CoopersGlass = () => {
       {/* Navigation */}
       <nav className="nav-links">
         <Link to="/" className="nav-button">Home</Link>
-        <Link to="/referrals" className="nav-button">Buy $Claim Now (desktop)</Link>
-        <Link to="/vendors" className="nav-button">Vendors</Link>
+        <Link to="/referrals" className="nav-button">Buy $Claim Now</Link>
+        <Link to="/vendors" className="nav-button">Shop</Link>
         <Link to="/about" className="nav-button">About Us</Link>
         <Link to="/giveaways" className="nav-button">AirDrops & Giveaways</Link>
       </nav>
