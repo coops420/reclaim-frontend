@@ -19,9 +19,20 @@ const ProductList = () => {
         <Link to="/giveaways" className="nav-button">AirDrops & Giveaways</Link>
       </nav>
 
-      {/* Vendor Image */}
+      {/* Vendor Image & Description */}
       <div className="vendor-header">
         <img src={vendorImage} alt="Vendor" className="vendor-image product-image" />
+        <div className="vendor-description-box">
+          <p><strong>Gorilla Pack Genetics</strong></p>
+          <p>Small-batch, single-source excellence. 👌 Every product I offer is exclusively grown, processed, and curated in-house—from hunting elite genetics to the final product. These phenos are one-of-a-kind, meticulously selected by me, and unavailable anywhere else. 🔥👌</p>
+          <p>Follow us for new drops & updates:  
+            <a href="https://www.instagram.com/gorillapackgenetics?igsh=anIwM3hudzBocGZ1&utm_source=qr" 
+               target="_blank" 
+               rel="noopener noreferrer">
+              📢 Instagram
+            </a>
+          </p>
+        </div>
       </div>
 
       {/* Products Grid */}
@@ -75,3 +86,4 @@ const ProductList = () => {
 };
 
 export default ProductList;
+

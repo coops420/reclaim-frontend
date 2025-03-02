@@ -31,15 +31,41 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
-.vendor-image {
-  width: 180px !important;
-  height: 180px !important;
-  object-fit: cover;
-  border-radius: 10px;
-  display: block;
+/* 🔹 Vendor Description - No Box, Just Text */
+.vendor-description-box {
+  padding: 0; /* Remove background & padding */
+  text-align: center;
+  font-family: "Arial", sans-serif;
+  font-size: 9px; /* Maintain readable text */
+  color: #e0e0e0; /* Light grey text */
+  line-height: 1.1; /* Less spacing */
+  max-width: 900px; /* Keep it wide */
+  height: auto;
+  margin: 5px auto; /* Centered */
+}
+
+.vendor-description-box p {
+  margin: 2px 0; /* Minimal spacing */
+}
+
+/* 🔹 Instagram Button (Adjusted for New Layout) */
+.vendor-instagram-button {
+  background-color: transparent; /* Remove button styling */
+  padding: 0;
+  font-size: 9px;
+  color: #f4c542;
+  font-weight: bold;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 2px;
+  transition: color 0.2s;
+}
+
+.vendor-instagram-button:hover {
+  color: #ffd700; /* Slight highlight effect */
 }
 
 /* 🔹 Product Grid */
@@ -121,7 +147,7 @@
 .product-details img {
   width: 180px !important;
   height: 180px !important;
-  object-fit: contain;  /* Ensure the full image is visible without zooming in */
+  object-fit: contain;
   border-radius: 10px;
   display: block;
 }
