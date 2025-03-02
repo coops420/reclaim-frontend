@@ -5,9 +5,13 @@ import vendorImage from "../assets/gorillapackgenetics.webp"; // Vendor image
 import strawberryFritter from "/src/assets/applefritter.jpg"; // Strawberry Fritter image
 import plumzImage from "/src/assets/plumz.jpg"; // Plumz image
 import plumz1Image from "/src/assets/plumz1.jpg"; // Plumz1 image (NEW)
-import honeydewPapaya1 from "../assets/honeydewpapaya1.jpg"; // New Honey Dew Papaya image for the left item
+import honeydewPapaya1 from "../assets/honeydewpapaya1.jpg"; // Honey Dew Papaya image for left item
 import honeydewPapayaImage from "../assets/honeydewpapaya.jpg"; // Existing Honey Dew Papaya image
 import bathsaltsImage from "../assets/bathsalts.jpg"; // BathSalts image
+
+// NEW Garlic images
+import garlicItem1 from "../assets/garlica1.jpg";
+import garlicItem2 from "../assets/garlica2.jpg";
 
 const ProductList = () => {
   return (
@@ -44,7 +48,19 @@ const ProductList = () => {
 
       {/* Products Grid */}
       <div className="products-grid">
-        {/* New Honey Dew Papaya Product (Active, placed very left) */}
+        {/* NEW Garlic Amaretto Live Resin Product (Active, placed very left) */}
+        <div className="product-item">
+          <Link to="/garlic">
+            <img src={garlicItem1} alt="Garlic Amaretto Live Resin" className="product-image" />
+            <img src={garlicItem2} alt="Garlic Amaretto Live Resin Extra" className="product-image" />
+            <div className="product-hover">
+              <p className="product-name">Garlic Amaretto Live Resin</p>
+              <p className="product-price">💲50.00</p>
+            </div>
+          </Link>
+        </div>
+
+        {/* Honey Dew Papaya Product (Active, placed next) */}
         <div className="product-item">
           <Link to="/honey2">
             <img src={honeydewPapaya1} alt="Honey Dew Papaya Live Rosin" className="product-image" />
@@ -111,4 +127,5 @@ const ProductList = () => {
 };
 
 export default ProductList;
+
 

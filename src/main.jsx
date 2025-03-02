@@ -26,6 +26,7 @@ import Plumz1 from "./pages/plumz1"; // New Plumz1 page
 import HoneyDewPapaya from "./pages/HoneyDewPapaya";
 import Honey2 from "./pages/Honey2"; // New page from honey2.jsx
 import BathSalts from "./pages/BathSalts";
+import GarlicAmarettoLiveResin from "./pages/garlic"; // New garlic page
 
 const endpoint = clusterApiUrl("mainnet-beta");
 
@@ -46,6 +47,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               <Route path="/honeydew-papaya" element={<HoneyDewPapaya />} />
               <Route path="/honey2" element={<Honey2 />} /> {/* New Honey2 route */}
               <Route path="/bathsalts" element={<BathSalts />} />
+              <Route path="/garlic" element={<GarlicAmarettoLiveResin />} /> {/* New Garlic page */}
 
               {/* Vendors and their product pages as separate routes */}
               <Route path="/vendors" element={<Vendors />} />
@@ -69,4 +71,3 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     </ConnectionProvider>
   </React.StrictMode>
 );
-
