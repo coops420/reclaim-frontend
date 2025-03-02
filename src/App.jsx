@@ -9,7 +9,7 @@ import Referrals from "./pages/Referrals";
 import "./App.css";
 
 export default function App() {
-  const contractAddress = "4vAxFw4b4cGEV7CzEcbWFJ38N3FTa1BxRM828xEzcxQR";
+  const contractAddress = "EkuBwtKVU1x5N2z1VESqBTZFnsQuWuxyQt9LDGqkJsk4";
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
