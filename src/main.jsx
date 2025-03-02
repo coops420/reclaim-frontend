@@ -22,6 +22,7 @@ import ProductList from "./pages/ProductList"; // Dynamic product list for other
 import Giveaways from "./pages/Giveaways";
 import StrawberryFritter from "./pages/StrawberryFritter";
 import Plumz from "./pages/Plumz";
+import Plumz1 from "./pages/plumz1"; // ✅ Imported new Plumz1.jsx page
 import HoneyDewPapaya from "./pages/HoneyDewPapaya";
 import BathSalts from "./pages/BathSalts";
 
@@ -40,6 +41,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               <Route path="/giveaways" element={<Giveaways />} />
               <Route path="/strawberry-fritter" element={<StrawberryFritter />} />
               <Route path="/plumz" element={<Plumz />} />
+              <Route path="/plumz1" element={<Plumz1 />} /> {/* ✅ Added the new Plumz1 route */}
               <Route path="/honeydew-papaya" element={<HoneyDewPapaya />} />
               <Route path="/bathsalts" element={<BathSalts />} />
 

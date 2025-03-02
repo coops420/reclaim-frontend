@@ -4,6 +4,7 @@ import "./ProductList.css";
 import vendorImage from "../assets/gorillapackgenetics.webp"; // Vendor image
 import strawberryFritter from "/src/assets/applefritter.jpg"; // Strawberry Fritter image
 import plumzImage from "/src/assets/plumz.jpg"; // Plumz image
+import plumz1Image from "/src/assets/plumz1.jpg"; // Plumz1 image (NEW)
 import honeydewPapayaImage from "../assets/honeydewpapaya.jpg"; // HoneyDew Papaya image
 import bathsaltsImage from "../assets/bathsalts.jpg"; // BathSalts image
 
@@ -37,6 +38,17 @@ const ProductList = () => {
 
       {/* Products Grid */}
       <div className="products-grid">
+        {/* Plumz1 Product (NEW - Active) */}
+        <div className="product-item">
+          <Link to="/plumz1">
+            <img src={plumz1Image} alt="Plumz1 Live Rosin" className="product-image" />
+            <div className="product-hover">
+              <p className="product-name">Plumz1 Live Rosin</p>
+              <p className="product-price">💲50.00</p>
+            </div>
+          </Link>
+        </div>
+
         {/* Strawberry Fritter Product (Sold Out, unclickable) */}
         <div className="product-item sold-out">
           <img
@@ -50,18 +62,16 @@ const ProductList = () => {
           </div>
         </div>
 
-        {/* Plumz Product */}
-        <div className="product-item">
-          <Link to="/plumz">
-            <img src={plumzImage} alt="Plumz Live Rosin" className="product-image" />
-            <div className="product-hover">
-              <p className="product-name">Plumz Live Rosin</p>
-              <p className="product-price">💲50.00</p>
-            </div>
-          </Link>
+        {/* Plumz Product (Sold Out, unclickable) */}
+        <div className="product-item sold-out">
+          <img src={plumzImage} alt="Plumz Live Rosin" className="product-image" />
+          <div className="product-hover">
+            <p className="product-name">Plumz Live Rosin</p>
+            <p className="product-price">Sold Out</p>
+          </div>
         </div>
 
-        {/* HoneyDew Papaya Product (Now unclickable and Sold Out) */}
+        {/* HoneyDew Papaya Product (Sold Out, unclickable) */}
         <div className="product-item sold-out">
           <img src={honeydewPapayaImage} alt="HoneyDew Papaya Live Rosin" className="product-image" />
           <div className="product-hover">
@@ -70,15 +80,13 @@ const ProductList = () => {
           </div>
         </div>
 
-        {/* BathSalts Product */}
-        <div className="product-item">
-          <Link to="/bathsalts">
-            <img src={bathsaltsImage} alt="BathSalts" className="product-image" />
-            <div className="product-hover">
-              <p className="product-name">BathSalts Flower</p>
-              <p className="product-price">💲40/💲200</p>
-            </div>
-          </Link>
+        {/* BathSalts Product (Sold Out, unclickable) */}
+        <div className="product-item sold-out">
+          <img src={bathsaltsImage} alt="BathSalts" className="product-image" />
+          <div className="product-hover">
+            <p className="product-name">BathSalts Flower</p>
+            <p className="product-price">Sold Out</p>
+          </div>
         </div>
       </div>
     </div>
