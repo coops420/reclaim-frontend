@@ -92,7 +92,7 @@ export default function Referrals() {
                         <h3>Step 2: Buy SOL</h3>
                         <ul className="step-list">
                             <li>1️⃣ Open your Phantom Wallet.</li>
-                            <li>2️⃣ Click <b>"Buy"</b> to purchase SOL.</li>
+                            <li>2️⃣ Click <b>"Buy"</b> to purchase Solana. Put the USD amount needed.</li>
                             <li>3️⃣ Complete your purchase and return here.</li>
                         </ul>
                         <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
