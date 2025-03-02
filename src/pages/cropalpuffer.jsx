@@ -13,8 +13,7 @@ import {
 import { getClaimPrice } from "../components/TokenPrice"; // Fetch live $CLAIM price
 import "./ProductList.css";
 import vendorImage from "../assets/coopersglass.jpg";
-import productImage from "../assets/blackcropalpuffer.jpg"; // Updated to Sonic Crushed Opal Puffer
-import emailjs from "emailjs-com";
+import productImage from "../assets/blackcropalpuffer.jpg"; // import emailjs from "emailjs-com";
 
 // ** ✅ QUICKNODE RPC URL **
 const QUICKNODE_RPC_URL =
@@ -245,7 +244,7 @@ const CoopersGlassProduct5 = () => {
       <div className="product-details card" style={{ textAlign: "center" }}>
         <img
           src={productImage}
-          alt="Sonic Crushed Opal Puffer" /* Updated alt text */
+          alt="Crushed Opal Puffer" /* Updated alt text */
           className="product-image"
         />
         <h2>Sonic Crushed Opal Puffer</h2> {/* Updated title */}
