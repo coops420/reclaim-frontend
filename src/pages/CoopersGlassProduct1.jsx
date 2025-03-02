@@ -376,6 +376,10 @@ const CoopersGlassProduct1 = () => {
           3) After a successful payment, confirmation emails will be sent automatically.
           <br />
         </p>
+ <p style={{ lineHeight: "1.6", marginTop: "1rem", fontStyle: "italic" }}>
+          We’ve noticed that Phantom Wallet may display a warning when making purchases on our site. This is due to automated security filters, not because our site is unsafe. If you prefer, you can manually send payment via DM or just create a fresh wallet for purchase if worried!
+        </p>
+
       </div>
 
       {/* Telegram Support Link */}
