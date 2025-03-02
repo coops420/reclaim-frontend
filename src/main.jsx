@@ -22,8 +22,9 @@ import ProductList from "./pages/ProductList"; // Dynamic product list for other
 import Giveaways from "./pages/Giveaways";
 import StrawberryFritter from "./pages/StrawberryFritter";
 import Plumz from "./pages/Plumz";
-import Plumz1 from "./pages/plumz1"; // ✅ Imported new Plumz1.jsx page
+import Plumz1 from "./pages/plumz1"; // New Plumz1 page
 import HoneyDewPapaya from "./pages/HoneyDewPapaya";
+import Honey2 from "./pages/Honey2"; // New page from honey2.jsx
 import BathSalts from "./pages/BathSalts";
 
 const endpoint = clusterApiUrl("mainnet-beta");
@@ -41,8 +42,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               <Route path="/giveaways" element={<Giveaways />} />
               <Route path="/strawberry-fritter" element={<StrawberryFritter />} />
               <Route path="/plumz" element={<Plumz />} />
-              <Route path="/plumz1" element={<Plumz1 />} /> {/* ✅ Added the new Plumz1 route */}
+              <Route path="/plumz1" element={<Plumz1 />} />
               <Route path="/honeydew-papaya" element={<HoneyDewPapaya />} />
+              <Route path="/honey2" element={<Honey2 />} /> {/* New Honey2 route */}
               <Route path="/bathsalts" element={<BathSalts />} />
 
               {/* Vendors and their product pages as separate routes */}

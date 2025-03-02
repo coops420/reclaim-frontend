@@ -5,7 +5,8 @@ import vendorImage from "../assets/gorillapackgenetics.webp"; // Vendor image
 import strawberryFritter from "/src/assets/applefritter.jpg"; // Strawberry Fritter image
 import plumzImage from "/src/assets/plumz.jpg"; // Plumz image
 import plumz1Image from "/src/assets/plumz1.jpg"; // Plumz1 image (NEW)
-import honeydewPapayaImage from "../assets/honeydewpapaya.jpg"; // HoneyDew Papaya image
+import honeydewPapaya1 from "../assets/honeydewpapaya1.jpg"; // New Honey Dew Papaya image for the left item
+import honeydewPapayaImage from "../assets/honeydewpapaya.jpg"; // Existing Honey Dew Papaya image
 import bathsaltsImage from "../assets/bathsalts.jpg"; // BathSalts image
 
 const ProductList = () => {
@@ -25,11 +26,16 @@ const ProductList = () => {
         <img src={vendorImage} alt="Vendor" className="vendor-image product-image" />
         <div className="vendor-description-box">
           <p><strong>Gorilla Pack Genetics</strong></p>
-          <p>Small-batch, single-source excellence. 👌 Every product I offer is exclusively grown, processed, and curated in-house—from hunting elite genetics to the final product. These phenos are one-of-a-kind, meticulously selected by me, and unavailable anywhere else. 🔥👌</p>
-          <p>Follow us for new drops & updates:  
-            <a href="https://www.instagram.com/gorillapackgenetics?igsh=anIwM3hudzBocGZ1&utm_source=qr" 
-               target="_blank" 
-               rel="noopener noreferrer">
+          <p>
+            Small-batch, single-source excellence. 👌 Every product I offer is exclusively grown, processed, and curated in-house—from hunting elite genetics to the final product. These phenos are one-of-a-kind, meticulously selected by me, and unavailable anywhere else. 🔥👌
+          </p>
+          <p>
+            Follow us for new drops & updates:  
+            <a
+              href="https://www.instagram.com/gorillapackgenetics?igsh=anIwM3hudzBocGZ1&utm_source=qr" 
+              target="_blank" 
+              rel="noopener noreferrer"
+            >
               📢 Instagram
             </a>
           </p>
@@ -38,6 +44,17 @@ const ProductList = () => {
 
       {/* Products Grid */}
       <div className="products-grid">
+        {/* New Honey Dew Papaya Product (Active, placed very left) */}
+        <div className="product-item">
+          <Link to="/honey2">
+            <img src={honeydewPapaya1} alt="Honey Dew Papaya Live Rosin" className="product-image" />
+            <div className="product-hover">
+              <p className="product-name">Honey Dew Papaya Live Rosin</p>
+              <p className="product-price">💲50.00</p>
+            </div>
+          </Link>
+        </div>
+
         {/* Plumz1 Product (NEW - Active) */}
         <div className="product-item">
           <Link to="/plumz1">
@@ -71,7 +88,7 @@ const ProductList = () => {
           </div>
         </div>
 
-        {/* HoneyDew Papaya Product (Sold Out, unclickable) */}
+        {/* Existing HoneyDew Papaya Product (Sold Out, unclickable) */}
         <div className="product-item sold-out">
           <img src={honeydewPapayaImage} alt="HoneyDew Papaya Live Rosin" className="product-image" />
           <div className="product-hover">

@@ -13,10 +13,10 @@ import {
 import { getClaimPrice } from "../components/TokenPrice"; // Fetch live $CLAIM price
 import "./ProductList.css";
 
-// ** Images from your smaller snippet:
-import vendorImage from "../assets/gorillapackgenetics.webp"; // The vendor image
-import plumzItem from "../assets/plumz1.jpg";  // The first product image
-import plumzItem2 from "../assets/plumz2.jpg"; // The second product image
+// ** Images: Updated for Honey Dew Papaya
+import vendorImage from "../assets/gorillapackgenetics.webp"; // Vendor image remains the same
+import papayaItem1 from "../assets/honeydewpapaya1.jpg";  // First product image
+import papayaItem2 from "../assets/honeydewpapaya2.jpg";  // Second product image
 
 import emailjs from "emailjs-com";
 
@@ -40,7 +40,7 @@ const publicKeyEmail = "BFAA9yJvj1yAllF9o";
 // ** Fixed price **
 const USD_PRICE = 50;
 
-const PlumZ = () => {
+const HoneyDewPapaya = () => {
   const { publicKey } = useWallet();
 
   const [claimPrice, setClaimPrice] = useState(null);
@@ -94,7 +94,7 @@ const PlumZ = () => {
     }
 
     try {
-      // 1) Ensure wallet connected
+      // Ensure wallet connected
       const ensureWalletConnected = async () => {
         if (!window.solana || !window.solana.isPhantom) {
           alert("Please install Phantom Wallet.");
@@ -119,7 +119,7 @@ const PlumZ = () => {
       }
       console.log("Blockhash fetched:", latestBlockhash.blockhash);
 
-      // 2) Token accounts
+      // Token accounts
       const senderTokenAccount = await getAssociatedTokenAddress(
         CLAIM_TOKEN_MINT,
         walletAddress
@@ -158,7 +158,7 @@ const PlumZ = () => {
         recipientAccountCreated = true;
       }
 
-      // 3) Convert $CLAIM to lamports
+      // Convert $CLAIM to lamports
       const claimAmountInLamports = BigInt(Number(CLAIM_AMOUNT) * 10 ** 6);
       if (recipientAccountCreated) {
         console.log("Fetching fresh blockhash for token transfer...");
@@ -166,7 +166,7 @@ const PlumZ = () => {
         latestBlockhash.blockhash = newBlockhash.blockhash;
       }
 
-      // 4) SPL transfer
+      // SPL token transfer
       console.log(`Requesting Phantom Wallet confirmation to send ${CLAIM_AMOUNT} $CLAIM...`);
       const transaction = new Transaction().add(
         createTransferInstruction(
@@ -185,13 +185,13 @@ const PlumZ = () => {
       alert(`Payment Successful! Sent ${CLAIM_AMOUNT} $CLAIM.\nTransaction ID: ${signature}`);
       console.log("Transaction confirmed:", signature);
 
-      // 5) Send emails
+      // Send emails with shipping info
       const shippingAddress = `${address1}${address2 ? ", " + address2 : ""}, ${city}, ${stateProvince}, ${postalCode}, ${country}`;
       const templateParams = {
         from_name: fullName,
         email,
         shippingAddress,
-        product: "PlumZ",
+        product: "Honey Dew Papaya",
         totalUSD: totalUsdCost,
         totalCLAIM: CLAIM_AMOUNT,
       };
@@ -240,15 +240,15 @@ const PlumZ = () => {
         <img src={vendorImage} alt="GorillaPack Genetics" className="vendor-image" />
       </div>
 
-      {/* Product Details Card */}
+      {/* Product Details Card (show both images) */}
       <div className="product-details card" style={{ textAlign: "center" }}>
-        <img src={plumzItem} alt="PlumZ" className="product-image" />
-        <img src={plumzItem2} alt="PlumZ Extra" className="product-image" />
-        <h2>PlumZ</h2>
-
-        {/* FREE SHIPPING ABOVE PRICE */}
+        <img src={papayaItem1} alt="Honey Dew Papaya" className="product-image" />
+        <img src={papayaItem2} alt="Honey Dew Papaya Extra" className="product-image" />
+        <h2>Honey Dew Papaya</h2>
+        
+        {/* Free Shipping placed above the price */}
         <p style={{ fontWeight: "bold", marginTop: "0.5rem" }}>Free Shipping</p>
-
+        
         <p>
           {loading
             ? "Loading $CLAIM price..."
@@ -297,7 +297,9 @@ const PlumZ = () => {
             <input
               type="email"
               placeholder="you@example.com"
-              onChange={(e) => setOrderDetails({ ...orderDetails, email: e.target.value })}
+              onChange={(e) =>
+                setOrderDetails({ ...orderDetails, email: e.target.value })
+              }
             />
           </div>
 
@@ -306,7 +308,9 @@ const PlumZ = () => {
             <input
               type="text"
               placeholder="123 Main St"
-              onChange={(e) => setOrderDetails({ ...orderDetails, address1: e.target.value })}
+              onChange={(e) =>
+                setOrderDetails({ ...orderDetails, address1: e.target.value })
+              }
             />
           </div>
           <div>
@@ -314,7 +318,9 @@ const PlumZ = () => {
             <input
               type="text"
               placeholder="Apt #"
-              onChange={(e) => setOrderDetails({ ...orderDetails, address2: e.target.value })}
+              onChange={(e) =>
+                setOrderDetails({ ...orderDetails, address2: e.target.value })
+              }
             />
           </div>
 
@@ -323,7 +329,9 @@ const PlumZ = () => {
             <input
               type="text"
               placeholder="City"
-              onChange={(e) => setOrderDetails({ ...orderDetails, city: e.target.value })}
+              onChange={(e) =>
+                setOrderDetails({ ...orderDetails, city: e.target.value })
+              }
             />
           </div>
           <div>
@@ -392,6 +400,4 @@ const PlumZ = () => {
   );
 };
 
-export default PlumZ;
-
-
+export default HoneyDewPapaya;
