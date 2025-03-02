@@ -67,7 +67,7 @@ export default function Referrals() {
             <div className="step-container">
                 {step === 1 && (
                     <div className="step-box">
-                        <h2>Step 1: Install & Detect Phantom Wallet</h2>
+                        <h2>Step 1: Download Phantom Wallet (Playstore/Extensions)</h2>
                         {phantomDetected ? (
                             <>
                                 <p className="success-text">✅ Phantom Wallet Detected!</p>
