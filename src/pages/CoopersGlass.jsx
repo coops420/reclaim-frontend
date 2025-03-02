@@ -1,20 +1,18 @@
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
 import "./Vendors.css";
-import gorillaPackImage from "../assets/gorillapackgenetics.webp";
-// Import Coopers Glass vendor image
 import coopersGlassImg from "../assets/coopersglass.jpg";
 
 // Example product images (update with real images)
 import product1 from "../assets/sonicspillproof.jpg";   // Sonic Cropal Spillproof
-import product2 from "../assets/lilactiptop.jpg";          // Lilac TipTop
-import product3 from "../assets/neonpuffer.jpg";           // Electric Neon Puffer
-import product4 from "../assets/mintcropalpuffer.jpg";       // Mint Crushed Opal Puffer
-import product5 from "../assets/soniccropalpuffer.jpg";      // Sonic Crushed Opal Puffer
-import product6 from "../assets/blackcropalpuffer.jpg";      // Black Crushed Opal Puffer
-import product7 from "../assets/hybridneon.png";             // Electric Neon Hybrid Proxy Peak Spillproof
-import product8 from "../assets/lvpuffer.jpg";               // LV Crushed Opal Puffer
-import product9 from "../assets/eaglesXL.jpg";              // Eagles XL Joystick Cropal Stick
+import product2 from "../assets/lilactiptop.jpg";       // Lilac TipTop
+import product3 from "../assets/neonpuffer.jpg";        // Electric Neon Puffer
+import product4 from "../assets/mintcropalpuffer.jpg";  // Mint Crushed Opal Puffer
+import product5 from "../assets/soniccropalpuffer.jpg"; // Sonic Crushed Opal Puffer
+import product6 from "../assets/blackcropalpuffer.jpg"; // Black Crushed Opal Puffer
+import product7 from "../assets/hybridneon.png";        // Electric Neon Hybrid Proxy Peak Spillproof
+import product8 from "../assets/lvpuffer.jpg";          // LV Crushed Opal Puffer
+import product9 from "../assets/eaglesXL.jpg";         // Eagles XL Joystick Cropal Stick
 
 const CoopersGlass = () => {
   return (
@@ -28,126 +26,82 @@ const CoopersGlass = () => {
         <Link to="/giveaways" className="nav-button">AirDrops & Giveaways</Link>
       </nav>
 
-      {/* Vendor Header */}
+      {/* Vendor Image & Description */}
       <div className="vendor-header">
-        <img src={coopersGlassImg} alt="Coopers Glass" className="vendor-image" />
+        <img src={coopersGlassImg} alt="Coopers Glass" className="vendor-image product-image" />
+        <div className="vendor-description-box">
+          <p><strong>Coopers Glass</strong></p>
+          <p>A highly respected artist with over a decade in the game, continuously innovating and inspiring the glassblowing community. Known for pioneering new designs and setting industry standards, Coopers Glass stays ahead with unmatched quality and top-tier support. 🔥✨</p>
+          <p>Connect on Instagram:  
+            <a href="https://instagram.com/coopersglass" 
+               target="_blank" 
+               rel="noopener noreferrer">
+              📢 ig@coopersglass
+            </a>
+          </p>
+        </div>
       </div>
 
       {/* Render nested routes here if a product is active */}
       <Outlet />
 
       {/* Products Grid (displayed by default if no nested route is active) */}
-      <div className="vendors-grid">
-        {/* Product 1 */}
-        <div className="product-item">
-          <Link to="/vendors/coopersglass/product1">
-            <img src={product1} alt="Sonic Cropal Spillproof" className="product-image" />
-            <div className="product-hover">
-              <p className="product-name">Sonic Cropal Spillproof</p>
-              <p className="product-retail-price"><del>Retail: $475.00</del></p>
-              <p className="product-sale-price">Claim: $325.00</p>
-            </div>
-          </Link>
-        </div>
-
-        {/* Product 2 */}
-        <div className="product-item">
-          <Link to="/vendors/coopersglass/product2">
-            <img src={product2} alt="Lilac TipTop" className="product-image" />
-            <div className="product-hover">
-              <p className="product-name">Lilac TipTop</p>
-              <p className="product-retail-price"><del>Retail: $125.00</del></p>
-              <p className="product-sale-price">Claim: $95.00</p>
-            </div>
-          </Link>
-        </div>
-
-        {/* Product 3 */}
-        <div className="product-item">
-          <Link to="/vendors/coopersglass/product3">
-            <img src={product3} alt="Electric Neon Puffer" className="product-image" />
-            <div className="product-hover">
-              <p className="product-name">Electric Neon Puffer</p>
-              <p className="product-retail-price"><del>Retail: $325.00</del></p>
-              <p className="product-sale-price">Claim: $225.00</p>
-            </div>
-          </Link>
-        </div>
-
-        {/* Product 4 */}
-        <div className="product-item">
-          <Link to="/vendors/coopersglass/product4">
-            <img src={product4} alt="Mint Crushed Opal Puffer" className="product-image" />
-            <div className="product-hover">
-              <p className="product-name">Mint Crushed Opal Puffer</p>
-              <p className="product-retail-price"><del>Retail: $375.00</del></p>
-              <p className="product-sale-price">Claim: $275.00</p>
-            </div>
-          </Link>
-        </div>
-
-        {/* Product 5 */}
-        <div className="product-item">
-          <Link to="/vendors/coopersglass/product5">
-            <img src={product5} alt="Sonic Crushed Opal Puffer" className="product-image" />
-            <div className="product-hover">
-              <p className="product-name">Sonic Crushed Opal Puffer</p>
-              <p className="product-retail-price"><del>Retail: $350.00</del></p>
-              <p className="product-sale-price">Claim: $275.00</p>
-            </div>
-          </Link>
-        </div>
-
-        {/* Product 6 */}
-        <div className="product-item">
-          <Link to="/vendors/coopersglass/product6">
-            <img src={product6} alt="Black Crushed Opal Puffer" className="product-image" />
-            <div className="product-hover">
-              <p className="product-name">Black Crushed Opal Puffer</p>
-              <p className="product-retail-price"><del>Retail: $375.00</del></p>
-              <p className="product-sale-price">Claim: $225.00</p>
-            </div>
-          </Link>
-        </div>
-
-        {/* Product 7 */}
-        <div className="product-item">
-          <Link to="/vendors/coopersglass/product7">
-            <img src={product7} alt="Electric Neon Hybrid Proxy Peak Spillproof" className="product-image" />
-            <div className="product-hover">
-              <p className="product-name">Electric Neon Hybrid Proxy Peak Spillproof</p>
-              <p className="product-retail-price"><del>Retail: $650.00</del></p>
-              <p className="product-sale-price">Claim: $450.00</p>
-            </div>
-          </Link>
-        </div>
-
-        {/* Product 8 */}
-        <div className="product-item">
-          <Link to="/vendors/coopersglass/product8">
-            <img src={product8} alt="LV Crushed Opal Puffer" className="product-image" />
-            <div className="product-hover">
-              <p className="product-name">LV Crushed Opal Puffer</p>
-              <p className="product-retail-price"><del>Retail: $425.00</del></p>
-              <p className="product-sale-price">Claim: $285.00</p>
-            </div>
-          </Link>
-        </div>
-
-        {/* Product 9 */}
-        <div className="product-item">
-          <Link to="/vendors/coopersglass/product9">
-            <img src={product9} alt="Eagles XL Joystick Cropal Stick" className="product-image" />
-            <div className="product-hover">
-              <p className="product-name">Eagles XL Joystick Cropal Stick</p>
-              <p className="product-retail-price"><del>Retail: $115.00</del></p>
-              <p className="product-sale-price">Claim: $85.00</p>
-            </div>
-          </Link>
-        </div>
+      <div className="products-grid">
+        {[product1, product2, product3, product4, product5, product6, product7, product8, product9].map((product, index) => (
+          <div className="product-item" key={index}>
+            <Link to={`/vendors/coopersglass/product${index + 1}`}>
+              <img src={product} alt={`Product ${index + 1}`} className="product-image" />
+              <div className="product-hover">
+                <p className="product-name">
+                  {[
+                    "Sonic Cropal Spillproof",
+                    "Lilac TipTop",
+                    "Electric Neon Puffer",
+                    "Mint Crushed Opal Puffer",
+                    "Sonic Crushed Opal Puffer",
+                    "Black Crushed Opal Puffer",
+                    "Electric Neon Hybrid Proxy Peak Spillproof",
+                    "LV Crushed Opal Puffer",
+                    "Eagles XL Joystick Cropal Stick"
+                  ][index]}
+                </p>
+                <p className="product-retail-price">
+                  <del>
+                    {[
+                      "$475.00",
+                      "$125.00",
+                      "$325.00",
+                      "$375.00",
+                      "$350.00",
+                      "$375.00",
+                      "$650.00",
+                      "$425.00",
+                      "$115.00"
+                    ][index]}
+                  </del>
+                </p>
+                <p className="product-sale-price">
+                  Claim: 
+                  {[
+                    "$325.00",
+                    "$95.00",
+                    "$225.00",
+                    "$275.00",
+                    "$275.00",
+                    "$225.00",
+                    "$450.00",
+                    "$285.00",
+                    "$85.00"
+                  ][index]}
+                </p>
+              </div>
+            </Link>
+          </div>
+        ))}
       </div>
     </div>
   );
 };
 
 export default CoopersGlass;
+

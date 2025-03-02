@@ -2,6 +2,9 @@
 .product-list-container {
   text-align: center;
   padding: 20px;
+  font-family: "Arial", sans-serif !important; /* Ensures a clean, readable font */
+  font-weight: normal;
+  color: #e0e0e0; /* Light grey for readability */
 }
 
 /* 🔹 Navigation Buttons */
@@ -9,13 +12,13 @@
   display: flex;
   justify-content: center;
   gap: 15px;
-  margin-bottom: 20px;
+  margin-bottom: 15px; /* Slightly reduced */
 }
 
 .nav-button {
   background: #333;
   color: white;
-  padding: 10px 15px;
+  padding: 8px 14px;
   border-radius: 5px;
   text-decoration: none;
   font-weight: bold;
@@ -26,58 +29,40 @@
   background: #555;
 }
 
-/* 🔹 Vendor Image - Fixed Size (Desktop) */
+/* 🔹 Vendor Header */
 .vendor-header {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 15px;
+  margin-bottom: 12px; /* Reduced */
 }
 
-/* 🔹 Vendor Description - No Box, Just Text */
+/* 🔹 Vendor Description */
 .vendor-description-box {
-  padding: 0; /* Remove background & padding */
   text-align: center;
-  font-family: "Arial", sans-serif;
-  font-size: 9px; /* Maintain readable text */
-  color: #e0e0e0; /* Light grey text */
-  line-height: 1.1; /* Less spacing */
-  max-width: 900px; /* Keep it wide */
+  font-family: "Arial", sans-serif !important;
+  font-size: 12px;
+  color: #e0e0e0;
+  line-height: 1.3;
+  max-width: 900px;
   height: auto;
-  margin: 5px auto; /* Centered */
+  margin: 4px auto;
 }
 
 .vendor-description-box p {
-  margin: 2px 0; /* Minimal spacing */
-}
-
-/* 🔹 Instagram Button (Adjusted for New Layout) */
-.vendor-instagram-button {
-  background-color: transparent; /* Remove button styling */
-  padding: 0;
-  font-size: 9px;
-  color: #f4c542;
-  font-weight: bold;
-  text-decoration: none;
-  display: inline-block;
-  margin-top: 2px;
-  transition: color 0.2s;
-}
-
-.vendor-instagram-button:hover {
-  color: #ffd700; /* Slight highlight effect */
+  margin: 3px 0;
 }
 
 /* 🔹 Product Grid */
 .products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 20px;
+  gap: 15px; /* Reduced */
   justify-content: center;
-  padding: 10px;
+  padding: 8px;
 }
 
-/* 🔹 Individual Product (in grid) */
+/* 🔹 Individual Product */
 .product-item {
   position: relative;
   overflow: hidden;
@@ -86,6 +71,7 @@
   border-radius: 10px;
 }
 
+/* 🔹 Product Image */
 .product-image {
   width: 180px !important;
   height: 180px !important;
@@ -94,141 +80,130 @@
   object-fit: cover;
 }
 
-/* 🔹 Hover Effect for Grid Items */
+/* 🔹 Hover Effect - Restores Product Details Display */
 .product-hover {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 0; /* Initially hidden */
-  background: rgba(0, 0, 0, 0.7);
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
   color: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
-  transition: height 0.3s ease-in-out;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
 }
 
 .product-item:hover .product-hover {
-  height: 100%;
+  opacity: 1;
 }
 
+/* 🔹 Product Name & Price - Ensures They Show on Hover */
 .product-name,
-.product-price {
-  margin: 5px 0;
-  font-size: 14px;
-}
-
-/* 🔹 Retail & Sale Prices */
-.product-retail-price {
-  font-size: 12px;
-  color: #ccc;
-  margin: 2px 0;
-}
-
+.product-price,
+.product-retail-price,
 .product-sale-price {
   font-size: 14px;
-  color: #00ff99;
   font-weight: bold;
-  margin: 2px 0;
+  color: white;
+  margin: 5px 0;
 }
 
-/* 🔹 Product Details Page */
-.product-details {
+/* 🔹 Checkout Section - Centered and Tightened */
+.checkout-form {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 20px;
-}
-
-/* Desktop Product Image in Details */
-.product-details img {
-  width: 180px !important;
-  height: 180px !important;
-  object-fit: contain;
-  border-radius: 10px;
-  display: block;
-}
-
-/* 🔹 Wallet Container */
-.wallet-container {
-  margin-top: 15px;
-  display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
+  max-width: 500px;
+  margin: 15px auto;
+  gap: 8px 20px; /* Reduced spacing between fields */
 }
 
-/* 🔹 Fix for Phantom Wallet Button Placement */
-.wallet-adapter-button-trigger {
-  position: relative !important;
-  z-index: 1000;
+/* 🔹 Adjust Labels */
+.checkout-form label {
+  font-size: 14px;
+  font-weight: normal;
+  color: #ddd;
+  display: block;
+  margin-bottom: 3px;
+  text-align: left;
 }
 
-/* 🔹 Buy Button (Desktop) */
-.buy-button {
+/* 🔹 Form Inputs */
+.checkout-form input {
+  width: 220px;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #888;
+  border-radius: 5px;
+  background: #222;
+  color: #fff;
+  margin-bottom: 5px;
+}
+
+/* 🔹 Buy Now Button - Restored to Large Blue */
+.buy-now-button {
   background: #007bff;
   color: white;
-  padding: 10px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 12px 20px;
   border: none;
   border-radius: 8px;
-  font-size: 16px;
   cursor: pointer;
-  margin-top: 10px;
+  margin-top: 15px;
   transition: 0.3s ease-in-out;
 }
 
-.buy-button:hover {
+.buy-now-button:hover {
   background: #0056b3;
 }
 
-/* 🔹 Image Zoom on Hover (Optional) */
-.product-item:hover .product-image {
-  transform: scale(1.05);
+/* 🔹 Instructions Box */
+.checkout-instructions {
+  background-color: #222;
+  padding: 12px;
+  border-radius: 8px;
+  max-width: 700px;
+  margin: 15px auto;
+  font-size: 14px;
+  color: #ccc;
+  text-align: center;
+  line-height: 1.4;
 }
 
-/* 🔹 Responsive Adjustments: 'Shrink Everything' on Mobile */
+/* 🔹 Responsive Adjustments */
 @media (max-width: 600px) {
-  /* Make container padding smaller */
   .product-list-container {
     padding: 10px;
   }
 
-  /* Stack nav buttons if needed */
   .nav-links {
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
   }
 
-  /* Single column for the order form on small screens */
-  .order-form {
-    grid-template-columns: 1fr !important;
-    row-gap: 1rem;
+  .checkout-form {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
   }
 
-  /* Shrink images from 180px -> 120px */
-  .vendor-image,
-  .product-details img,
-  .product-item,
-  .product-image {
-    width: 120px !important;
-    height: 120px !important;
+  .checkout-form input {
+    width: 90%;
   }
 
-  /* Shrink the buy button, text size, and padding for small screens */
-  .buy-button {
-    font-size: 14px;
-    padding: 8px 16px;
-  }
-
-  /* Possibly shrink font sizes more if wanted */
-  .product-name,
-  .product-price,
-  .product-retail-price,
-  .product-sale-price {
-    font-size: 12px !important;
+  .checkout-instructions {
+    font-size: 13px;
   }
 }
+
+
+
+
 
 

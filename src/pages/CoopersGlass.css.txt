@@ -1,0 +1,119 @@
+/* 🔹 Ensure Readable Text Styles for Coopers Glass Checkout */
+.coopers-glass-checkout {
+  text-align: center;
+  font-family: "Arial", sans-serif !important; /* Forces clean, readable font */
+  color: #e0e0e0; /* Light grey for better contrast */
+}
+
+/* 🔹 Fix for Product Title */
+.coopers-glass-checkout .checkout-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: white;
+  text-shadow: none; /* Removes glowing effects */
+}
+
+/* 🔹 Price Box */
+.coopers-glass-checkout .price-box {
+  background-color: #333;
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  margin: 10px auto;
+  display: inline-block;
+}
+
+/* 🔹 Payment Conversion Box */
+.coopers-glass-checkout .payment-conversion {
+  background-color: #222;
+  padding: 8px 15px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: normal;
+  color: #ffcc00; /* Yellow for visibility */
+  margin: 15px auto;
+  display: inline-block;
+}
+
+/* 🔹 Form Inputs */
+.coopers-glass-checkout .checkout-form input {
+  width: 250px;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #888;
+  border-radius: 5px;
+  background: #222;
+  color: #fff;
+  margin: 5px;
+}
+
+/* 🔹 Adjust Labels for Readability */
+.coopers-glass-checkout .checkout-form label {
+  font-size: 16px;
+  font-weight: normal;
+  color: #ddd;
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* 🔹 Form Layout */
+.coopers-glass-checkout .checkout-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(200px, 1fr));
+  gap: 15px;
+  justify-content: center;
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+/* 🔹 Buy Now Button */
+.coopers-glass-checkout .buy-now-button {
+  background: #007bff;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: 0.3s ease-in-out;
+}
+
+.coopers-glass-checkout .buy-now-button:hover {
+  background: #0056b3;
+}
+
+/* 🔹 Instructions Box */
+.coopers-glass-checkout .checkout-instructions {
+  background-color: #222;
+  padding: 15px;
+  border-radius: 10px;
+  max-width: 700px;
+  margin: 20px auto;
+  font-size: 16px;
+  color: #ccc;
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* 🔹 Responsive Adjustments for Mobile */
+@media (max-width: 600px) {
+  .coopers-glass-checkout .checkout-title {
+    font-size: 24px;
+  }
+
+  .coopers-glass-checkout .checkout-form {
+    grid-template-columns: 1fr;
+  }
+
+  .coopers-glass-checkout .checkout-form input {
+    width: 90%;
+  }
+
+  .coopers-glass-checkout .checkout-instructions {
+    font-size: 14px;
+  }
+}

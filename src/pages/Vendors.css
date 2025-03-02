@@ -14,7 +14,7 @@
   margin-top: 40px; /* ⬇ Lowered slightly */
 }
 
-/* 🔹 Page Title (renamed from .vendors-title to .page-title) */
+/* 🔹 Page Title */
 .page-title {
   font-size: 2.5rem;
   font-weight: bold;
@@ -37,20 +37,45 @@
 
 /* 🔹 Vendor Item */
 .vendor-item {
-  width: 175px;
+  width: 200px; /* Keep width consistent */
   height: 270px;
   border-radius: 10px;
   position: relative;
   overflow: hidden;
   cursor: pointer;
+  display: flex;
+  justify-content: center; /* Centering content */
+  align-items: center;
 }
 
-.vendor-image {
-  width: 110%;
-  height: 100%;
-  object-fit: cover;
+/* 🔹 Left Vendor Image (Centered & Aligned) */
+.vendor-item:first-child .vendor-image {
+  width: 100%; /* Matches size with right image */
+  height: 105%;
+  object-fit: contain; /* Ensures full image is displayed without cropping */
   border-radius: 10px;
   transition: transform 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 🔹 Right Vendor Image (Made Slightly Smaller) */
+.vendor-item:last-child .vendor-image {
+  width: 120%; /* Reduced size to match left image */
+  height: 65%;
+  object-fit: contain;
+  border-radius: 10px;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* 🔹 Fix Coopers Glass Vendor Image Size on Product Page */
+.vendor-header .vendor-image {
+  max-width: 250px; /* Adjust this size as needed */
+  height: auto;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto; /* Centers the image */
 }
 
 /* 🔹 Hover Effect for Name */
@@ -84,20 +109,30 @@
 
   /* Shrink vendor items */
   .vendor-item {
-    width: 140px;
+    width: 160px;
     height: 220px;
   }
 
-  /* Adjust the vendor image so it fits the new size better */
-  .vendor-image {
-    width: 120%;
-    height: auto;
+  /* Adjust the left vendor image so it fits better */
+  .vendor-item:first-child .vendor-image {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Adjust the right vendor image (Slightly Smaller for Alignment) */
+  .vendor-item:last-child .vendor-image {
+    width: 85%;
+    height: 85%;
   }
 
   /* Reduce the vendor-name font-size */
   .vendor-name {
     font-size: 14px;
   }
-}
 
+  /* Fix Coopers Glass Vendor Image Size on Mobile */
+  .vendor-header .vendor-image {
+    max-width: 200px;
+  }
+}
 
