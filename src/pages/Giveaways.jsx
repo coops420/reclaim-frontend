@@ -36,6 +36,29 @@ const Giveaways = () => {
         </ul>
       </div>
 
+      {/* ✅ Entered in the Giveaways List */}
+      <div className="giveaway-entries">
+        <h2 className="giveaway-entries-title">Entered in the Giveaways</h2>
+        <ul className="entries-list">
+          <li>Jack St****</li>
+          <li>GorillapackGenetics</li>
+          <li>Dick **nes</li>
+          <li>Fuckhead - Shawn</li>
+          <li>Tristen W****</li>
+          <li>Ethan **** / Suwooravioli / ETH</li>
+          <li>Cole De****</li>
+          <li>Take Up Tucson</li>
+          <li>Nick A****</li>
+          <li>Juanito</li>
+          <li>Zaid G (CrypRap)</li>
+          <li>Clay Ross****</li>
+          <li>Greatmarques1</li>
+          <li>Goldfishhhh Collectibles</li>
+          <li>Gorillapack Friend</li>
+          <li>Dropkick jones</li>
+        </ul>
+      </div>
+
       {/* ✅ Countdown Timer for Weekly Airdrop & Burn */}
       <div className="countdown-container">
         <h2 className="countdown-title">NEXT $CLAIM AIRDROP & BURN</h2>
