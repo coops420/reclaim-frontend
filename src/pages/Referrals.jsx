@@ -22,7 +22,6 @@ const buttonStyle = (color) => ({
 
 export default function Referrals() {
     const location = useLocation();
-    const [phantomDetected, setPhantomDetected] = useState(false);
     const [step, setStep] = useState(1);
 
     // Extract referral name from URL (supports both pathname and query parameters)
@@ -42,23 +41,16 @@ export default function Referrals() {
         }
     }, [location]);
 
-    // Detect Phantom Wallet
-    useEffect(() => {
-        if (window.solana && window.solana.isPhantom) {
-            setPhantomDetected(true);
-        }
-    }, []);
-
     return (
         <div className="app-container">
             {/* Navigation */}
             <nav className="navbar">
                 <div className="nav-links">
-                      <Link to="/" className="nav-button">Home</Link>
-                      <Link to="/referrals" className="nav-button">Buy $Claim</Link>
-                      <Link to="/vendors" className="nav-button">Shop</Link>
-                      <Link to="/about" className="nav-button">About Us</Link>
-                      <Link to="/giveaways" className="nav-button">AirDrops & Giveaways</Link> {/* ✅ NEW BUTTON */}
+                    <Link to="/" className="nav-button">Home</Link>
+                    <Link to="/referrals" className="nav-button">Buy $Claim</Link>
+                    <Link to="/vendors" className="nav-button">Shop</Link>
+                    <Link to="/about" className="nav-button">About Us</Link>
+                    <Link to="/giveaways" className="nav-button">AirDrops & Giveaways</Link> {/* ✅ NEW BUTTON */}
                 </div>
             </nav>
 
@@ -67,33 +59,33 @@ export default function Referrals() {
             <div className="step-container">
                 {step === 1 && (
                     <div className="step-box">
-                        <h2>Step 1: Download Phantom Wallet (Playstore/Extensions)</h2>
-                        {phantomDetected ? (
-                            <>
-                                <p className="success-text">✅ Phantom Wallet Detected!</p>
-                                <button onClick={() => setStep(2)} style={buttonStyle("#6200EA")}>
-                                    Continue to Step 2
-                                </button>
-                            </>
-                        ) : (
-                            <>
-                                <p className="error-text">🚨 Phantom Wallet Not Detected!</p>
-                                <a href="https://phantom.app/" target="_blank" rel="noopener noreferrer" style={buttonStyle("#007BFF")}>
-                                    Download Phantom Wallet
-                                </a>
-                            </>
-                        )}
+                        <h2>Step 1: Download Phantom Wallet (Playstore/Link Below)</h2>
+                        <p className="info-text">
+                            If you haven't already installed it,
+                            do so now and continue to step 2:
+                        </p>
+                        <a
+                            href="https://phantom.app/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={buttonStyle("#007BFF")}
+                        >
+                            Download Phantom Wallet
+                        </a>
+                        <button onClick={() => setStep(2)} style={buttonStyle("#6200EA")}>
+                            Continue to Step 2
+                        </button>
                     </div>
                 )}
 
                 {step === 2 && (
                     <div className="step-box">
                         <h2>Reclaim Token - Buy & Swap</h2>
-                        <h3>Step 2: Buy SOL</h3>
+                        <h3>Step 2: Buy Solana</h3>
                         <ul className="step-list">
-                            <li>1️⃣ Open your Phantom Wallet.</li>
+                            <li>1️⃣ Open your Phantom Wallet.(app on mobile, top right in extensions on desktops.</li>
                             <li>2️⃣ Click <b>"Buy"</b> to purchase Solana. Put the USD amount needed.</li>
-                            <li>3️⃣ Complete your purchase and return here.</li>
+                            <li>3️⃣ Complete your purchase using payment type wanted and return here.</li>
                         </ul>
                         <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                             <button onClick={() => setStep(3)} style={buttonStyle("#28A745")}>
@@ -106,16 +98,21 @@ export default function Referrals() {
                 {step === 3 && (
                     <div className="step-box">
                         <h2>Reclaim Token - Buy & Swap</h2>
-                        <h3>Step 3: Swap SOL for $CLAIM</h3>
+                        <h3>Step 3: Swap Solana for RECLAIM</h3>
                         <ul className="step-list">
-                            <li>1️⃣ Click <b>Open Jupiter</b></li>
-                            <li>2️⃣ Click <b>Connect Wallet</b> in Jupiter</li>
-                            <li>3️⃣ Select <b>Phantom (Ghost Icon)</b></li>
-                            <li>4️⃣ Click <b>MAX</b> in the SOL section</li>
-                            <li>5️⃣ Click <b>Swap</b> and confirm in Phantom</li>
+                            <li>1️⃣ Click <b>Phantom</b> again to open it</li>
+                            <li>2️⃣ Click <b>Swap</b> middle top icon.</li>
+                            <li>3️⃣ Select <b>Solana</b> for the top coin</li>
+                            <li>4️⃣ Select <b>Reclaim</b>  or put <b>EkuBwtKVU1x5N2z1VESqBTZFnsQuWuxyQt9LDGqkJsk4</b> in the Bottom coin to bring it right to Reclaim</li>
+                            <li>5️⃣ Click  <b>MAX</b> then click <b>Swap</b> and confirm in Phantom</li>
                         </ul>
-                        <button 
-                            onClick={() => window.open("https://jup.ag/swap/SOL-EkuBwtKVU1x5N2z1VESqBTZFnsQuWuxyQt9LDGqkJsk4", "_blank")} 
+                        <button
+                            onClick={() =>
+                                window.open(
+                                    "https://jup.ag/swap/SOL-EkuBwtKVU1x5N2z1VESqBTZFnsQuWuxyQt9LDGqkJsk4",
+                                    "_blank"
+                                )
+                            }
                             style={buttonStyle("#FF9800")}
                         >
                             Open Jupiter
