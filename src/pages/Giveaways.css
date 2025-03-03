@@ -1,11 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 
 .giveaways-container {
   text-align: center;
   padding: 20px 20px;
   color: #fff;
   background: #111;
-  font-family: 'Audiowide', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -142,12 +142,15 @@
   .countdown-container {
     padding: 15px;
   }
+
   .countdown-title {
     font-size: 1.4rem;
   }
+
   .countdown-info {
     font-size: 0.9rem;
   }
+
   .countdown-note {
     font-size: 0.8rem;
   }
