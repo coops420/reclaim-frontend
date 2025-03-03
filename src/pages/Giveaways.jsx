@@ -56,6 +56,9 @@ const Giveaways = () => {
           <li>Goldfishhhh Collectibles</li>
           <li>Gorillapack Friend</li>
           <li>Dropkick jones</li>
+           <li>Cruz_Crispin</li>
+            <li>CountVp</li>
+
         </ul>
       </div>
 
