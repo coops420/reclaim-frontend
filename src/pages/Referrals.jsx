@@ -106,18 +106,7 @@ export default function Referrals() {
                             <li>4️⃣ Select <b>Reclaim</b>  or put <b>EkuBwtKVU1x5N2z1VESqBTZFnsQuWuxyQt9LDGqkJsk4</b> in the Bottom coin to bring it right to Reclaim</li>
                             <li>5️⃣ Click  <b>MAX</b> then click <b>Swap</b> and confirm in Phantom</li>
                         </ul>
-                        <button
-                            onClick={() =>
-                                window.open(
-                                    "https://jup.ag/swap/SOL-EkuBwtKVU1x5N2z1VESqBTZFnsQuWuxyQt9LDGqkJsk4",
-                                    "_blank"
-                                )
-                            }
-                            style={buttonStyle("#FF9800")}
-                        >
-                            Open Jupiter
-                        </button>
-                        <p>🎉 Congrats! You Now Have $CLAIM!</p>
+             <p>🎉 Congrats! You Now Have $CLAIM!</p>
                     </div>
                 )}
             </div>
