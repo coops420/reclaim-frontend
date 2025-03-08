@@ -19,7 +19,7 @@ export default function App() {
 
       {/* Navigation (Only Shop button retained) */}
       <nav className="nav-links">
-        <Link to="/vendors" className="nav-button">Shop</Link>
+        <Link to="/vendors/coopersglass" className="nav-button">Shop</Link>
       </nav>
 
       {/* Routing Setup */}

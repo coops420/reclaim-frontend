@@ -29,7 +29,7 @@ const CoopersGlass = () => {
       {/* Navigation */}
       <nav className="nav-links">
         <Link to="/" className="nav-button">Home</Link>
-        <Link to="/vendors" className="nav-button">Shop</Link>
+        <Link to="/vendors/coopersglass" className="nav-button">Shop</Link>
       </nav>
 
       {/* Vendor Image & Description */}
