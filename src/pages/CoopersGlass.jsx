@@ -60,7 +60,7 @@ const CoopersGlass = () => {
       <div className="products-grid">
         {/* Product 10: Proxy Recycler Clear */}
         <div className="product-item">
-          <Link to="/vendors/coopersglass/product10">
+          <div>
             <img src={proxrec} alt="Proxy Recycler Clear" className="product-image" />
             <div className="product-hover">
               <p className="product-name">Proxy Recycler Clear</p>
@@ -68,12 +68,12 @@ const CoopersGlass = () => {
                 <span className="retail-price">$550.00</span>
               </p>
             </div>
-          </Link>
+          </div>
         </div>
 
         {/* Product 11: Blue Stardust Crushed Opal Puffer */}
         <div className="product-item">
-          <Link to="/vendors/coopersglass/product11">
+          <div>
             <img src={dustcrop} alt="Blue Stardust Crushed Opal Puffer" className="product-image" />
             <div className="product-hover">
               <p className="product-name">Blue Stardust Crushed Opal Puffer</p>
@@ -81,12 +81,12 @@ const CoopersGlass = () => {
                 <span className="retail-price">$375.00</span>
               </p>
             </div>
-          </Link>
+          </div>
         </div>
 
         {/* Product 12: Pivot Cropal Top */}
         <div className="product-item">
-          <Link to="/vendors/coopersglass/product12">
+          <div>
             <img src={piv} alt="Pivot Cropal Top" className="product-image" />
             <div className="product-hover">
               <p className="product-name">Pivot Cropal Top</p>
@@ -94,13 +94,13 @@ const CoopersGlass = () => {
                 <span className="retail-price">$135.00</span>
               </p>
             </div>
-          </Link>
+          </div>
         </div>
 
         {/* Existing Products */}
         {[product1, product2, product3, product4, product5, product6, product7, product8, product9].map((product, index) => (
           <div className="product-item" key={index}>
-            <Link to={`/vendors/coopersglass/product${index + 1}`}>
+            <div>
               <img src={product} alt={`Product ${index + 1}`} className="product-image" />
               <div className="product-hover">
                 <p className="product-name">
@@ -132,7 +132,7 @@ const CoopersGlass = () => {
                   </span>
                 </p>
               </div>
-            </Link>
+            </div>
           </div>
         ))}
       </div>
