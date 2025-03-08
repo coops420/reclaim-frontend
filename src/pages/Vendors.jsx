@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./Vendors.css";
-import gorillaPackImage from "../assets/gorillapackgenetics.webp";
 import coopersGlassImg from "../assets/coopersglass.jpg";
 
 const Vendors = () => {
@@ -20,16 +19,6 @@ const Vendors = () => {
       <h1 className="page-title">VENDORS</h1>
 
       <div className="vendors-grid">
-        {/* Gorilla Pack Genetics */}
-        <Link to="/vendors/gorillapack" className="vendor-item">
-          <img
-            src={gorillaPackImage}
-            alt="Gorilla Pack Genetics"
-            className="vendor-image"
-          />
-          <div className="vendor-name">Gorilla Pack Genetics</div>
-        </Link>
-
         {/* Coopers Glass – Link to the dedicated vendor page */}
         <Link to="/vendors/coopersglass" className="vendor-item">
           <img
@@ -45,3 +34,4 @@ const Vendors = () => {
 };
 
 export default Vendors;
+
