@@ -29,10 +29,7 @@ const CoopersGlass = () => {
       {/* Navigation */}
       <nav className="nav-links">
         <Link to="/" className="nav-button">Home</Link>
-        <Link to="/referrals" className="nav-button">Buy $Claim Now</Link>
         <Link to="/vendors" className="nav-button">Shop</Link>
-        <Link to="/about" className="nav-button">About Us</Link>
-        <Link to="/giveaways" className="nav-button">AirDrops & Giveaways</Link>
       </nav>
 
       {/* Vendor Image & Description */}
@@ -67,8 +64,9 @@ const CoopersGlass = () => {
             <img src={proxrec} alt="Proxy Recycler Clear" className="product-image" />
             <div className="product-hover">
               <p className="product-name">Proxy Recycler Clear</p>
-              <p className="product-retail-price"><del>$550.00</del></p>
-              <p className="product-sale-price">Claim: $350.00</p>
+              <p className="product-retail-price">
+                <span className="retail-price">$550.00</span>
+              </p>
             </div>
           </Link>
         </div>
@@ -79,8 +77,9 @@ const CoopersGlass = () => {
             <img src={dustcrop} alt="Blue Stardust Crushed Opal Puffer" className="product-image" />
             <div className="product-hover">
               <p className="product-name">Blue Stardust Crushed Opal Puffer</p>
-              <p className="product-retail-price"><del>$375.00</del></p>
-              <p className="product-sale-price">Claim: $275.00</p>
+              <p className="product-retail-price">
+                <span className="retail-price">$375.00</span>
+              </p>
             </div>
           </Link>
         </div>
@@ -91,8 +90,9 @@ const CoopersGlass = () => {
             <img src={piv} alt="Pivot Cropal Top" className="product-image" />
             <div className="product-hover">
               <p className="product-name">Pivot Cropal Top</p>
-              <p className="product-retail-price"><del>$135.00</del></p>
-              <p className="product-sale-price">Claim: $95.00</p>
+              <p className="product-retail-price">
+                <span className="retail-price">$135.00</span>
+              </p>
             </div>
           </Link>
         </div>
@@ -117,7 +117,7 @@ const CoopersGlass = () => {
                   ][index]}
                 </p>
                 <p className="product-retail-price">
-                  <del>
+                  <span className="retail-price">
                     {[
                       "$475.00",
                       "$125.00",
@@ -129,21 +129,7 @@ const CoopersGlass = () => {
                       "$425.00",
                       "$115.00"
                     ][index]}
-                  </del>
-                </p>
-                <p className="product-sale-price">
-                  Claim: 
-                  {[
-                    "$325.00",
-                    "$95.00",
-                    "$225.00",
-                    "$275.00",
-                    "$275.00",
-                    "$225.00",
-                    "$450.00",
-                    "$285.00",
-                    "$85.00"
-                  ][index]}
+                  </span>
                 </p>
               </div>
             </Link>
@@ -155,4 +141,3 @@ const CoopersGlass = () => {
 };
 
 export default CoopersGlass;
-
